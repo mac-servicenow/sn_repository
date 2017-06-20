@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>8f0f64630f603100c8badf2be1050ec4</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_sections"&gt;
+    &lt;sn_onesearch_sections action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;client_script&gt;&lt;![CDATA[/*** Client-side functions utilized in the Results script HTML ***/
+function attachKB(kbID, taskID){
+	var ga = new GlideAjax('sn_onesearch.oneSearchAjax_ClientHelpersCore');
+	ga.addParam('sysparm_name', 'attachKnowledgeToTask');
+	ga.addParam('sysparm_task_id', taskID);
+	ga.addParam('sysparm_kb_id', kbID);
+	ga.getXMLAnswer(processResultsKB);
+	
+	var isFieldHere = (g_form.getControl('comments') != null);
+	if (isFieldHere){
+		var kbArt = new GlideRecord('kb_knowledge');
+		kbArt.addQuery('sys_id', kbID);
+		kbArt.query(kbCallback);
+	}
+	else
+		g_form.addErrorMessage('Unable to set the "Additional comments" field because it is not available on this form.');
+	
+	function kbCallback(kbArt){
+		if (kbArt.next()){
+			var currComm = g_form.getValue('comments');
+			if (currComm != '')
+				currComm += '\n\n';
+			g_form.setValue('comments', currComm + '[code]' + kbArt.text + '[/code]');
+		}
+	}
+}
+
+function processResultsKB(results){
+	if (results == 'success')
+		g_form.addInfoMessage('Knowledge attached &amp; added to comments - Save record to finalize.');
+	else if (results == 'cancelled')
+		g_form.addInfoMessage('Knowledge added to comments - Save record to finalize.');
+}]]&gt;&lt;/client_script&gt;
+        &lt;footer&gt;&lt;![CDATA[&lt;p&gt;&lt;a title="Visit the KB" href="/nav_to.do?uri=$knowledge.do" target="_blank" rel="nofollow"&gt;&lt;em&gt;Visit the KB&lt;/em&gt;&lt;/a&gt;&amp;nbsp;&lt;i class="glyphicon glyphicon-new-window"&gt;&lt;/i&gt;&lt;/p&gt;]]&gt;&lt;/footer&gt;
+        &lt;label&gt;KB&lt;/label&gt;
+        &lt;order&gt;100&lt;/order&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[/*** Knowledgebase Search ***/
+
+/*
+Available variables:
+searchTerm - search string
+currSysID - sys_id of record being searched from
+tableName - table of record being searched from
+isNew - true/false if the record being searched from is a new record
+maxResults - maximum results to return, as defined on the parent searcher
+[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)
+
+Result variable:
+answer - array of HTML contents or links
+ */
+
+//Get debug logging setting
+var debug = gs.getProperty('sn_onesearch.debug');
+
+//Instantiate return array
+var returnArray = [];
+
+//Set query preferences
+var ordering = 'relevancy';
+var encQuery = 'active=true^workflow_state=published^valid_to&gt;=javascript:gs.daysAgoEnd(0)';
+
+//Setup query
+var kb = new GlideRecord("kb_knowledge");
+kb.addEncodedQuery(encQuery);
+kb.addQuery('IR_AND_OR_QUERY', searchTerm);
+kb.setLimit(maxResults);
+kb.orderByDesc(ordering);
+kb.query();
+while (kb.next()) {
+	//Check permissions. If user is allowed, build HTML link to return
+	if (kb.canRead() &amp;&amp; (kb.roles.nil() || gs.hasRole(kb.roles))){
+		var link = '';
+		link += '&lt;table&gt;&lt;tr&gt;';
+		//Add 'Attach' button w/ onClick function
+		//onClick function declared in Client script field
+		//Manage button styles
+		var setColor = '#E6E8EA'; //Medium gray
+		var onStyle = ' style="background-color:' + setColor + ';"';
+		var offStyle = '';
+		var buttonStyle = offStyle;
+		var attachButtonText = ' Attach';
+		if (isNew == 'false'){
+			var kbTask = new GlideRecord('m2m_kb_task');
+			kbTask.addQuery('kb_knowledge', kb.sys_id.toString());
+			kbTask.addQuery('task', currSysID);
+			kbTask.query();
+			if (kbTask.next()){
+				attachButtonText = ' Is' + attachButtonText + 'ed';
+				buttonStyle = onStyle;
+			}
+		}
+		link += '&lt;td style="padding-right:10px;padding-bottom:2px"&gt;&lt;button' + buttonStyle + ' type="button" class="btn btn-default btn-xs" title="Add KB article to Incident comments" onclick="attachKB(\'' + kb.sys_id.toString() + '\', \'' + currSysID + '\');"&gt;&lt;span class="glyphicon glyphicon-ok" aria-hidden="true"&gt;&lt;/span&gt;' + attachButtonText + '&lt;/button&gt;&lt;/td&gt;';
+		//Start article link
+		//If KB direct to attachment, link to file
+		if (kb.direct){
+			//Get attachment
+			var attachmentID = '';
+			var attachment = new GlideRecord("sys_attachment");
+			attachment.addQuery("table_name", "kb_knowledge");
+			attachment.addQuery("table_sys_id", kb.sys_id.toString());
+			attachment.query();
+			if (attachment.next())
+				attachmentID = attachment.sys_id.toString();
+			link += '&lt;td style="padding-bottom:5px"&gt;&lt;a href="sys_attachment.do?sys_id=' + attachmentID + '" tabindex="-1" target="_blank" ';
+			//Add hover preview functionality
+			//Disabled due to some browser compatibility issues
+			//link += 'onmousemove="popKnowledgeDiv(event, \''+ kb.sys_id + '\');" onmouseout="lockPopupID(event, \'' + kb.sys_id + '\');" ';
+			link += 'onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\'));"&gt;' + kb.number + '  -  ';
+		}
+		//If normal KB article, link to article
+		else{
+			link += '&lt;td style="padding-bottom:5px"&gt;&lt;a href="kb_view.do?sysparm_article=' + kb.number + '" tabindex="-1" target="_blank" ';
+			//Add hover preview functionality
+			//Disabled due to some browser compatibility issues
+			//link += 'onmousemove="popKnowledgeDiv(event, \''+ kb.sys_id + '\');" onmouseout="lockPopupID(event, \'' + kb.sys_id + '\');" ';
+			link += 'onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\')); self.fillField = \'' + kb.getTableName() + '.short_description\'; popupOpenStandard(\'kb_view.do?sys_kb_id=' + kb.sys_id.toString() + '&amp;sysparm_kb_search_table=' + kb.getTableName() + '&amp;sysparm_nameofstack=kbpop\',\'kb2task\'); return false;"&gt;' + kb.number + '   -   ';
+		}
+		
+		//Add Topic/Category
+		var top = kb.topic.getDisplayValue();
+		var cat = kb.category.getDisplayValue();
+		var hasTop = (kb.topic != '');
+		var hasCat = (kb.category != '');
+		if (hasTop &amp;&amp; hasCat)
+			link += '&lt;i&gt;' + top + '/' + cat + '&lt;/i&gt;: ';
+		else if (hasTop)
+			link += '&lt;i&gt;' + top + '&lt;/i&gt;: ';
+		else if (hasCat)
+			link += '&lt;i&gt;' + cat + '&lt;/i&gt;: ';
+		link += kb.short_description;
+		//Add rating stars
+		var hasRatings = (kb.rating != '');
+		if (hasRatings){
+			link += ' (';
+			for (var i=0; i &lt; kb.rating; i++) {
+				link += '&amp;#9733;';
+			}
+			link += ')';
+		}
+		link += '&lt;/a&gt;&lt;/td&gt;';
+		//Close out section
+		link += '&lt;/tr&gt;&lt;/table&gt;';
+		//Push the full search result HTML link onto the return array
+		returnArray.push(link);
+	}
+}
+
+if (debug == 'true')
+	gs.info('Onesearch: Results of KB script = ' + returnArray.toString());
+answer = returnArray;]]&gt;&lt;/script&gt;
+        &lt;searcher display_value="Sample advanced form searcher (links &amp;amp; buttons)"&gt;3b1728ef0f203100c8badf2be1050eeb&lt;/searcher&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2014-11-28 18:14:03&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;8f0f64630f603100c8badf2be1050ec4&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;109&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2015-10-05 03:30:13&lt;/sys_updated_on&gt;
+    &lt;/sn_onesearch_sections&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:02</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>4590464e44e5420002addd3ec4bf4ab6</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>KB</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_4590464e44e5420002addd3ec4bf4ab6</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-05 03:34:16</sys_updated_on>
+        <tablename>sn_onesearch_sections</tablename>
+    </sys_metadata_link>
+</record_update>

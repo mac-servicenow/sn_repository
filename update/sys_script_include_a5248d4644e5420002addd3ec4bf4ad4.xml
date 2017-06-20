@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>sn_onesearch.oneSearchAjax_ClientHelpersCustom</api_name>
+        <client_callable>true</client_callable>
+        <description>**Edit this - it is purpose-built for your custom code and will not be updated in future OneSearch versions.&#13;
+Script Include to provide helper functions for Section client scripts.</description>
+        <name>oneSearchAjax_ClientHelpersCustom</name>
+        <script><![CDATA[var oneSearchAjax_ClientHelpersCustom = Class.create();
+oneSearchAjax_ClientHelpersCustom.prototype = Object.extendsObject(sn_onesearch.oneSearchAjax_ClientHelpersCore, {
+	//Add custom functions or override oneSearchAjax_ClientHelpersCore functions here!
+	//To call from a searcher section client script:
+	//var ga = new GlideAjax('sn_onesearch.oneSearchAjax_ClientHelpersCustom');
+	//ga.addParam('sysparm_name', '[functionName]');
+	//ga.getXMLAnswer();
+	
+	type: 'oneSearchAjax_ClientHelpersCustom'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 17:09:14</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>a5248d4644e5420002addd3ec4bf4ad4</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>oneSearchAjax_ClientHelpersCustom</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_script_include_a5248d4644e5420002addd3ec4bf4ad4</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-30 20:20:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

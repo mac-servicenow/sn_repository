@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Number of seconds between searches necessary to spawn a new log entry. Continued searches within the cooldown window will update the existing log entry. (lower is more verbose, higher is more efficient)</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>sn_onesearch.log_cooldown</name>
+        <read_roles/>
+        <suffix>log_cooldown</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-12-10 22:21:25</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>d04adb970f703100c8badf2be1050e29</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>sn_onesearch.log_cooldown</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_properties_d04adb970f703100c8badf2be1050e29</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2014-12-11 21:51:22</sys_updated_on>
+        <type>integer</type>
+        <value>30</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=d04adb970f703100c8badf2be1050e29"/>
+</record_update>

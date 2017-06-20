@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_section caption="Behavior" section_id="554c28230f603100c8badf2be1050e5d" sys_domain="global" table="sn_onesearch_searchers" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>23d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <text>&lt;ul&gt;&lt;li&gt;&lt;b&gt;Always visible&lt;/b&gt;: When checked, sections will always be visible. Otherwise, sections will only appear once the search field or variable is populated.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Dynamic (less efficient)&lt;/b&gt;: When checked, searches will populate in real-time as the field or variable is populated. Non-dynamic searches are only applied when the user clicks on a searcher section.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Background refresh (less efficient)&lt;/b&gt;: When checked, all searcher sections will be refreshed as the field or variable is changed. Otherwise, only the visible section is dynamically refreshed - Non-visible sections will refresh when they are clicked.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Show count badge&lt;/b&gt;: When checked, sections will be tagged with the number of returned search results.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Hide empty sections&lt;/b&gt;: When checked, sections with no search results will be hidden from view.&lt;/li&gt;&lt;li&gt;&lt;b&gt;New only (more efficient)&lt;/b&gt;: When checked, the searcher will only apply to new records.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Immediate search (less efficient)&lt;/b&gt;: When checked, the search will be initiated immediately upon open of an existing record. Otherwise, a change to the search field or variable must be made to initiate search.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Max results&lt;/b&gt;: The maximum number of search results returned per section (leave blank to return all results).&lt;/li&gt;&lt;li&gt;&lt;b&gt;Paginate&lt;/b&gt;: When checked, search results will be paginated client-side.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Items per page&lt;/b&gt;: When pagination is enabled, the number of items to display for each page.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Typeahead&lt;/b&gt;: Enable typeahead suggestions on the search field (By default, new typeahead suggestions are gathered daily from OneSearch logs. Configurable values and the scheduled job under OneSearch modules).false.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Collapsible&lt;/b&gt;: Enable a widget that will collapse/expand search results, setting a user preference for future searches.&lt;/li&gt;&lt;/ul&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>23d28dee0f2642007a2b778ce1050ecb</element>
+            <position>0</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>63d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>a3d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>always_visible</element>
+            <position>2</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>e3d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>dynamic</element>
+            <position>3</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>27d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>background_refresh</element>
+            <position>4</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>67d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>count_badge</element>
+            <position>5</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>a7d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>hide_empty_sections</element>
+            <position>6</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>e7d28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>7</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>2bd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>new_only</element>
+            <position>8</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>6bd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>immediate_search</element>
+            <position>9</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>abd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>max_results</element>
+            <position>10</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>ebd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>paginate</element>
+            <position>11</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>2fd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>items_per_page</element>
+            <position>12</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>6fd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>typeahead</element>
+            <position>13</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>afd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>collapsible</element>
+            <position>14</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>efd28dee0f2642007a2b778ce1050ecb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>15</position>
+            <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+            <sys_created_on>2015-09-19 23:23:10</sys_created_on>
+            <sys_id>23d28dee0f2642007a2b778ce1050ecc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Behavior" display_value="Behavior" name="sn_onesearch_searchers" sys_domain="global" view="Default view">554c28230f603100c8badf2be1050e5d</sys_ui_section>
+            <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-19 23:23:10</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Behavior</caption>
+            <header>false</header>
+            <name>sn_onesearch_searchers</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2014-11-28 18:01:37</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>554c28230f603100c8badf2be1050e5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Behavior</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+            <sys_update_name>sys_ui_section_554c28230f603100c8badf2be1050e5d</sys_update_name>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2014-11-28 18:01:37</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

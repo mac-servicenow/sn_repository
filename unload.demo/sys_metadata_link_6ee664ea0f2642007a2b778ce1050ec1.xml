@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>6ac628ea0f2642007a2b778ce1050ed9</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_user_preference">
+    <sys_user_preference action="INSERT_OR_UPDATE">
+        <description>OneSearch Collapsed results view</description>
+        <name>onesearch_collapsed</name>
+        <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+        <sys_created_on>2015-09-19 21:20:53</sys_created_on>
+        <sys_id>6ac628ea0f2642007a2b778ce1050ed9</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-19 21:48:52</sys_updated_on>
+        <system>true</system>
+        <type>string</type>
+        <user/>
+        <value>false</value>
+    </sys_user_preference>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield_SHARE</sys_created_by>
+        <sys_created_on>2015-09-19 21:21:02</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>6ee664ea0f2642007a2b778ce1050ec1</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>onesearch_collapsed</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_6ee664ea0f2642007a2b778ce1050ec1</sys_update_name>
+        <sys_updated_by>ben.hollifield_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-19 21:49:15</sys_updated_on>
+        <tablename>sys_user_preference</tablename>
+    </sys_metadata_link>
+</record_update>

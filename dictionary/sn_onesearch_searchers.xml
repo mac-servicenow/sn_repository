@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element attributes="update_synch=true" audit="true" label="Searchers" max_length="40" name="sn_onesearch_searchers" type="collection">
+        <element default="true" hint="Determines whether the searcher is active and will be displayed" label="Active" max_length="40" name="active" type="boolean"/>
+        <element dependent="form" dependent_on_field="form" hint="Additional field values from the form needed to perform the search" label="Additional fields" max_length="40" name="additional_fields" type="field_list" use_dependent_field="true"/>
+        <element hint="Additional field values from the page needed to perform the search" label="Additional field IDs" max_length="1000" name="additional_field_ids" type="string"/>
+        <element hint="Additional variable values from the item needed to perform the search" label="Additional variables" max_length="4000" name="additional_variables" reference="item_option_new" reference_qual="javascript:sn_onesearch.getVariables()" type="glide_list" use_reference_qualifier="advanced"/>
+        <element label="Always visible" max_length="40" name="always_visible" type="boolean"/>
+        <element label="Background refresh" max_length="40" name="background_refresh" type="boolean"/>
+        <element label="Collapsible" max_length="40" name="collapsible" type="boolean"/>
+        <element default="true" label="Show count badge" max_length="40" name="count_badge" type="boolean"/>
+        <element hint="Details of this searcher, where to use it, and how to implement it" label="Description" max_length="1000" name="description" type="string"/>
+        <element default="true" label="Dynamic" max_length="40" name="dynamic" type="boolean"/>
+        <element dependent="form" dependent_on_field="form" hint="Field that will trigger this searcher and will provide the search string" label="Search field" max_length="40" name="field" type="field_name" use_dependent_field="true"/>
+        <element hint="ID of the field that will trigger this searcher and will provide the search string" label="Search field ID" max_length="40" name="field_id" type="string"/>
+        <element hint="Form or table on which to display this searcher" label="Form" max_length="80" name="form" type="table_name"/>
+        <element label="Hide empty sections" max_length="40" name="hide_empty_sections" type="boolean"/>
+        <element label="Immediate search" max_length="40" name="immediate_search" type="boolean"/>
+        <element hint="Catalog item or record producer on which to display this searcher" label="Item" max_length="32" name="item" reference="sc_cat_item" type="reference"/>
+        <element default="5" label="Items per page" max_length="40" name="items_per_page" type="integer"/>
+        <element default="10" label="Max results" max_length="40" name="max_results" type="integer"/>
+        <element display="true" hint="Descriptive name for this searcher" label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element default="true" label="New only" max_length="40" name="new_only" type="boolean"/>
+        <element default="100" hint="In instances where multiple Searchers may match, order in which Searchers are checked (in ascending order)" label="Order" max_length="40" name="order" type="integer"/>
+        <element hint="UI page on which to display this searcher" label="Page" max_length="40" name="page" reference="sys_ui_page" type="reference"/>
+        <element hint="Page identifier indicating where the Searcher is located (either the full URL, the page name including .do, or the URL suffix)" label="Page identifier" max_length="1024" name="page_url" type="url"/>
+        <element label="Paginate" max_length="40" name="paginate" type="boolean"/>
+        <element default="88a993ed4425420002addd3ec4bf4aea" label="Skin" mandatory="true" max_length="32" name="skin" reference="sn_onesearch_skins" type="reference"/>
+        <element choice="1" hint="The type of record this searcher will apply to, such as a form or a catalog item" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element label="Form" sequence="0" value="form"/>
+                <element label="Catalog Item/Record Producer" sequence="1" value="catalog"/>
+                <element label="UI Page" sequence="2" value="page"/>
+                <element label="Other (by URL)" sequence="3" value="other"/>
+            </choice>
+        </element>
+        <element label="Typeahead" max_length="40" name="typeahead" type="boolean"/>
+        <element hint="Variable that will trigger this searcher and will provide the search string" label="Search variable" max_length="32" name="variable" reference="item_option_new" reference_qual="javascript:sn_onesearch.getVariables()" type="reference" use_reference_qualifier="advanced"/>
+        <index name="index">
+            <element name="item"/>
+        </index>
+        <index name="index2">
+            <element name="skin"/>
+        </index>
+        <index name="index3">
+            <element name="variable"/>
+        </index>
+        <index name="index4">
+            <element name="page"/>
+        </index>
+    </element>
+</database>

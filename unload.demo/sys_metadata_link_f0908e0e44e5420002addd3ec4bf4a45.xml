@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>4cd5de9f0f303100c8badf2be1050e75</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_sections"&gt;
+    &lt;sn_onesearch_sections action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;client_script&gt;&lt;![CDATA[/*** Client-side functions utilized in the Results script HTML ***/
+/*
+Example:
+function linkPRB(prbSysID){
+	g_form.setValue('problem_id', prbSysID);
+}
+*/]]&gt;&lt;/client_script&gt;
+        &lt;footer&gt;&lt;![CDATA[&lt;p style="text-align: center;"&gt;&lt;a title="Visit the Knowledge Base" href="/nav_to.do?uri=$knowledge.do" target="_blank" rel="nofollow"&gt;&lt;em&gt;Visit the Knowledge Base&lt;/em&gt;&lt;/a&gt;&amp;nbsp;&lt;i class="glyphicon glyphicon-new-window"&gt;&lt;/i&gt;&lt;/p&gt;]]&gt;&lt;/footer&gt;
+        &lt;label&gt;Knowledge Base&lt;/label&gt;
+        &lt;order&gt;100&lt;/order&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[/*** Knowledgebase Search ***/
+
+/*
+Available variables:
+searchTerm - search string
+currSysID - sys_id of record being searched from
+tableName - table of record being searched from
+isNew - true/false if the record being searched from is a new record
+maxResults - maximum results to return, as defined on the parent searcher
+[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)
+
+Result variable:
+answer - array of HTML contents or links
+ */
+
+//Get debug logging setting
+var debug = gs.getProperty('sn_onesearch.debug');
+
+//Instantiate return array
+var returnArray = [];
+
+//Set query preferences
+var ordering = 'relevancy';
+var encQuery = 'active=true^workflow_state=published^valid_to&gt;=javascript:gs.daysAgoEnd(0)';
+
+//Setup query
+var kb = new GlideRecord("kb_knowledge");
+kb.addEncodedQuery(encQuery);
+kb.addQuery('IR_AND_OR_QUERY', searchTerm);
+kb.setLimit(maxResults);
+kb.orderByDesc(ordering);
+kb.query();
+while (kb.next()) {
+	//Check permissions. If user is allowed, build HTML link to return
+	if (kb.canRead() &amp;&amp; (kb.roles.nil() || gs.hasRole(kb.roles))){
+		var link;
+		var detailDesc;
+		if (!kb.text.nil())
+			detailDesc = kb.text.toString().replace(/&lt;(?:.|\n)*?&gt;/gm, '').substr(0, 200) + '. . .';
+		else
+			detailDesc = kb.short_description;
+		
+		//If KB direct to attachment, link to file
+		if (kb.direct){
+			//Get attachment
+			var attachmentID = '';
+			var attachment = new GlideRecord("sys_attachment");
+			attachment.addQuery("table_name", "kb_knowledge");
+			attachment.addQuery("table_sys_id", kb.sys_id.toString());
+			attachment.query();
+			if (attachment.next())
+				attachmentID = attachment.sys_id.toString();
+			link = '&lt;table&gt;&lt;tr&gt;&lt;td style="width:200px; padding-right:10px"&gt;&lt;a href="sys_attachment.do?sys_id=' + attachmentID + '" tabindex="-1" target="_blank" ';
+			//Add hover preview functionality
+			//Disabled due to some browser compatibility issues
+			//link += 'onmousemove="popKnowledgeDiv(event, \''+ kb.sys_id + '\');" onmouseout="lockPopupID(event, \'' + kb.sys_id + '\');" ';
+			link += 'onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\'));"&gt;&lt;b&gt;' + kb.short_description + '&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;';
+		}
+		//If normal KB article, link to article
+		else{
+			link = '&lt;table&gt;&lt;tr&gt;&lt;td style="width:200px; padding-right:10px"&gt;&lt;a href="kb_view.do?sysparm_article=' + kb.number + '" tabindex="-1" target="_blank" ';
+			//Add hover preview functionality
+			//Disabled due to some browser compatibility issues
+			//link += 'onmousemove="popKnowledgeDiv(event, \''+ kb.sys_id + '\');" onmouseout="lockPopupID(event, \'' + kb.sys_id + '\');" ';
+			link += ' onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\'));self.fillField = \'' + kb.getTableName() + '.short_description\'; popupOpenStandard(\'kb_view.do?sys_kb_id=' + kb.sys_id.toString() + '&amp;sysparm_kb_search_table=' + kb.getTableName() + '&amp;sysparm_nameofstack=kbpop\',\'kb2task\'); return false;"&gt;&lt;b&gt;' + kb.short_description + '&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;';
+		}
+		//Continue link
+		link += '&lt;td&gt;&lt;i&gt;' + detailDesc + '&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;hr /&gt;';
+		
+		//Push the full search result HTML link onto the return array
+		returnArray.push(link);
+	}
+}
+if (debug == 'true')
+	gs.info('Onesearch: Results of KB script = ' + returnArray.toString());
+answer = returnArray;]]&gt;&lt;/script&gt;
+        &lt;searcher display_value="Sample record producer searcher"&gt;41a96bc10ff03100c8badf2be1050ea5&lt;/searcher&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2014-12-10 17:19:57&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;4cd5de9f0f303100c8badf2be1050e75&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;20&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2015-10-05 03:31:13&lt;/sys_updated_on&gt;
+    &lt;/sn_onesearch_sections&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:01</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>f0908e0e44e5420002addd3ec4bf4a45</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Knowledge Base</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_f0908e0e44e5420002addd3ec4bf4a45</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-05 03:34:16</sys_updated_on>
+        <tablename>sn_onesearch_sections</tablename>
+    </sys_metadata_link>
+</record_update>

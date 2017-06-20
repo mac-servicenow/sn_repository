@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Log" max_length="40" name="sn_onesearch_log" type="collection">
+        <element hint="A converted search resulted in a click-through to a search result link" label="Converted" max_length="40" name="converted" read_only="true" type="boolean"/>
+        <element default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element hint="Searcher in which this search occurred" label="Searcher" max_length="32" name="searcher" read_only="true" reference="sn_onesearch_searchers" type="reference"/>
+        <element hint="Term (minus common terms) that was searched" label="Search term" max_length="100" name="search_term" read_only="true" type="string"/>
+        <element hint="Searcher section where the conversion (or click-through) occurred" label="Section" max_length="40" name="section" read_only="true" type="string"/>
+        <element hint="Link that was click to convert this search" label="URL" max_length="100" name="url" read_only="true" type="string"/>
+        <element hint="User ID of the user who initiated this search" label="User" max_length="32" name="user" read_only="true" reference="sys_user" type="string"/>
+        <index name="index">
+            <element name="searcher"/>
+        </index>
+    </element>
+</database>

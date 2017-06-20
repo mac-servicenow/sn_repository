@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>sn_onesearch.oneSearch_ServerHelpersCore</api_name>
+        <client_callable>false</client_callable>
+        <description>**Do not edit - this may be updated in future OneSearch versions&#13;
+Script Include to provide helper functions for Section server result scripts.</description>
+        <name>oneSearch_ServerHelpersCore</name>
+        <script><![CDATA[var oneSearch_ServerHelpersCore = Class.create();
+oneSearch_ServerHelpersCore.prototype = {
+	initialize: function() {
+		this.debug = gs.getProperty('sn_onesearch.debug');
+	},
+	
+	//Update typeahead values from search logs
+	//Check search logs for search values & searchers
+	//NOTE: Scheduled job for this runs daily - Check module for details
+	updateTypeaheadValuesFromLogs: function(){
+		var logRecord = new GlideRecord("sn_onesearch_log");
+		//Only check searches from last 7 days
+		logRecord.addEncodedQuery("sys_created_onONLast 7 days@javascript:gs.daysAgoStart(7)@javascript:gs.daysAgoEnd(0)");
+		//Only use converted searches
+		logRecord.addQuery("converted", true);
+		logRecord.orderBy("sys_created_on");
+		logRecord.query();
+		while (logRecord.next()) {
+			//Check & Add value
+			this.addValueToTypeahead(logRecord.search_term.toString().toLowerCase(), logRecord.searcher.sys_id.toString(), logRecord.sys_created_on);
+		}
+		//Remove old values
+		this.removeOldTypeaheadValues();
+	},
+	//Check if typeahead value exists. If not, add it!
+	addValueToTypeahead: function(value, searcher, time){
+		var existingTypeahead = new GlideRecord("sn_onesearch_typeahead_values");
+		existingTypeahead.addQuery("searcher", searcher).addOrCondition("searcher","");
+		existingTypeahead.addQuery("value", value);
+		existingTypeahead.query();
+		if (existingTypeahead.next()) {
+			if (time != ''){
+				existingTypeahead.last_searched = new GlideDateTime(time);
+				existingTypeahead.update();
+			}
+		}
+		else{
+			var newTypeahead = new GlideRecord("sn_onesearch_typeahead_values");
+			newTypeahead.initialize();
+			newTypeahead.searcher = searcher;
+			newTypeahead.value = value;
+			if (time != '')
+				newTypeahead.last_searched = new GlideDateTime(time);
+			newTypeahead.insert();
+		}
+	},
+	//Remove typeahead values that haven't been searched in 30 days
+	removeOldTypeaheadValues: function(){
+		var existingTypeahead = new GlideRecord("sn_onesearch_typeahead_values");
+		existingTypeahead.addEncodedQuery("last_searched<javascript:gs.daysAgoStart(30)");
+		existingTypeahead.deleteMultiple();
+	},
+	
+	type: 'oneSearch_ServerHelpersCore'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-28 19:47:01</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>efd35b9144e1420002addd3ec4bf4a15</sys_id>
+        <sys_mod_count>46</sys_mod_count>
+        <sys_name>oneSearch_ServerHelpersCore</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_script_include_efd35b9144e1420002addd3ec4bf4a15</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-18 20:32:12</sys_updated_on>
+    </sys_script_include>
+</record_update>

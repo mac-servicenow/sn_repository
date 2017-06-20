@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>e88a993d4465420002addd3ec4bf4ac7</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_skins"&gt;
+    &lt;sn_onesearch_skins action="INSERT_OR_UPDATE"&gt;
+        &lt;description&gt;Stacked bootstrap panels w/ accordion&amp;#13;
+-Pagination optional, depending on Searcher settings&amp;#13;
+-Collapsible optional, depending on Searcher settings&lt;/description&gt;
+        &lt;name&gt;Stacked Panels&lt;/name&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2015-07-30 00:08:13&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;e88a993d4465420002addd3ec4bf4ac7&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;38&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2015-09-22 19:59:54&lt;/sys_updated_on&gt;
+        &lt;xml&gt;&lt;![CDATA[&lt;section ng-show="fieldPopped"&gt;
+	&lt;!--Client scripts rendering--&gt;
+	&lt;div ng-repeat="clientScript in clientScripts track by $index"&gt;
+		&lt;div ng-bind-html="renderHTML(clientScript)"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;!--Collapser rendering--&gt;
+	&lt;div id="collapser" ng-show="collapsible=='true'"&gt;
+		&lt;button type="button" id="collapse_button" class="btn btn-primary" ng-click="toggleCollapse(true)"&gt;&lt;span ng-class="{'glyphicon glyphicon-chevron-up':collapsed=='true','glyphicon glyphicon-chevron-down':collapsed!='true'}" aria-hidden="true"&gt;&lt;/span&gt;&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div id="collapsible" ng-class="{'collapse':collapsed=='true','collapse in':collapsed!='true'}"&gt;
+		&lt;!--Search sections rendering--&gt;
+		&lt;div ng-repeat="section in sections" class="panel panel-default os-animate" ng-show="!hideSection(sectionResultCounts[$index], section)"&gt;
+			&lt;div class="panel-heading"&gt;
+				&lt;h4&gt;
+					&lt;a class="accordion-toggle" data-toggle="collapse" href="#{{$index}}"&gt;
+						{{section}}&amp;#160;&lt;span class="badge" ng-show="countBadge"&gt;&lt;div ng-bind-html="renderHTML(sectionResultCounts[$index])"&gt;&lt;/div&gt;&lt;/span&gt;
+					&lt;/a&gt;
+				&lt;/h4&gt;
+			&lt;/div&gt;
+			&lt;div class="list-group"&gt;
+				&lt;div id="{{$index}}" class="panel-collapse collapse in"&gt;
+					&lt;!--Search results rendering--&gt;
+					&lt;!--Search results account for pagination, but only paginate when enabled in searcher--&gt;
+					&lt;div class="list-group-item os-animate" ng-repeat="search_link in search_results[section].slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"&gt;
+						&lt;div ng-bind-html="renderHTML(search_link)"&gt;&lt;/div&gt;
+					&lt;/div&gt;
+					&lt;!--Paginator rendering--&gt;
+					&lt;div ng-show="paginate == 'true' &amp;amp;&amp;amp; search_results[section].length &gt; itemsPerPage" class="text-center"&gt;
+						&lt;pagination
+							ng-model="currentPage"
+							total-items="search_results[section].length"
+							items-per-page="itemsPerPage"
+							class="pagination-sm"
+							previous-text="&amp;#8249;"
+							next-text="&amp;#8250;"&gt;
+	    				&lt;/pagination&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;!-- Copy Link action (not offered for forms) --&gt;
+		&lt;div class="col-xs-12" style="text-align: center;"&gt;
+			&lt;a ng-show="searcherType!='form'" ng-click="aPrompt('Because of a browser limitation the URL can not be placed directly in the clipboard.  Please use Ctrl-C to copy the data and escape to dismiss this dialog', getLink())"&gt;Copy link&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/section&gt;]]&gt;&lt;/xml&gt;
+    &lt;/sn_onesearch_skins&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:16</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>6ca0464e44e5420002addd3ec4bf4aba</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Stacked Panels</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_6ca0464e44e5420002addd3ec4bf4aba</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-22 20:01:14</sys_updated_on>
+        <tablename>sn_onesearch_skins</tablename>
+    </sys_metadata_link>
+</record_update>

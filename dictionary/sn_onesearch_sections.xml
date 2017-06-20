@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element attributes="update_synch=true" audit="true" label="Sections" max_length="40" name="sn_onesearch_sections" type="collection">
+        <element default="true" hint="Determines whether the section is active and will be displayed" label="Active" max_length="40" name="active" type="boolean"/>
+        <element default="/*** Client-side functions utilized in the Results script HTML ***/&#13;&#10;/*&#13;&#10;Example:&#13;&#10;function linkPRB(prbSysID){&#13;&#10;&#9;g_form.setValue('problem_id', prbSysID);&#13;&#10;}&#13;&#10;*/" label="Client script" max_length="8000" name="client_script" type="script_plain"/>
+        <element hint="Static HTML content to be added to the bottom of the search results for this section" label="Section footer" max_length="65536" name="footer" type="html"/>
+        <element display="true" hint="Label that will be displayed on the search section header" label="Label" mandatory="true" max_length="40" name="label" type="string"/>
+        <element default="100" hint="Order (ascending) in which the search sections will be displayed" label="Order" max_length="40" name="order" type="integer"/>
+        <element hint="Roles required to see this section (leave blank for all users)" label="Roles" max_length="4000" name="roles" reference="sys_user_role" type="glide_list"/>
+        <element default="/*&#13;&#10;Available variables:&#13;&#10;searchTerm - search string&#13;&#10;currSysID - sys_id of record being searched from&#13;&#10;searcherSysId - sys_id of the searcher record being used&#13;&#10;sectionName - The display name of the searcher section being used&#13;&#10;tableName - table of record being searched from&#13;&#10;isNew - true/false if the record being searched from is a new record&#13;&#10;[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)&#13;&#10;&#13;&#10;Result variable:&#13;&#10;answer - array of HTML contents or links&#13;&#10;*/" hint="Server script to be evaluated against the search term in order to return an array of html results" label="Results script" max_length="8000" name="script" type="script_plain"/>
+        <element hint="Searcher in which this section will be displayed" label="Searcher" mandatory="true" max_length="32" name="searcher" reference="sn_onesearch_searchers" reference_cascade_rule="delete" type="reference"/>
+        <index name="index">
+            <element name="searcher"/>
+        </index>
+    </element>
+</database>

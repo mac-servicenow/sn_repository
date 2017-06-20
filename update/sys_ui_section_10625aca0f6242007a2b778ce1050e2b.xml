@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_section caption="" section_id="10625aca0f6242007a2b778ce1050e2b" sys_domain="global" table="sn_onesearch_typeahead_values" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>a5bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <text>Typeahead values determine what typeahead options users will see when initiating a matching search.&lt;ul&gt;&lt;li&gt;&lt;b&gt;Searcher&lt;/b&gt;: The searcher for which this value will be visible. (Leave blank to make visible on all searchers.)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Last searched&lt;/b&gt;: The date this value was last seen in the search log. (Not needed for manually entered typeahead values)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Order&lt;/b&gt;: The order (top-to-bottom) in which this value will appear when matched.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Active&lt;/b&gt;: Determines whether this value is currently active and will appear when matched.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Value&lt;/b&gt;: The value that will appear in typeahead search results.&lt;/li&gt;&lt;/ul&gt;&lt;i&gt;Note: By default, new typeahead suggestions are gathered daily from OneSearch logs. Configure or deactivate the scheduled job under OneSearch modules).&lt;/i&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>a5bb66020fa242007a2b778ce1050e2d</element>
+            <position>0</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>e5bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>29bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>searcher</element>
+            <position>2</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>69bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>last_searched</element>
+            <position>3</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>a9bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>e9bb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>order</element>
+            <position>5</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>2dbb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>6</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:16</sys_created_on>
+            <sys_id>6dbb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:16</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>7</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:17</sys_created_on>
+            <sys_id>bdbb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:17</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>value</element>
+            <position>8</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 17:44:17</sys_created_on>
+            <sys_id>fdbb66020fa242007a2b778ce1050e2d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_typeahead_values" sys_domain="global" view="Default view">10625aca0f6242007a2b778ce1050e2b</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 17:44:17</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>sn_onesearch_typeahead_values</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-09-18 15:53:36</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>10625aca0f6242007a2b778ce1050e2b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>sn_onesearch_typeahead_values</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+            <sys_update_name>sys_ui_section_10625aca0f6242007a2b778ce1050e2b</sys_update_name>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-09-18 15:53:36</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>97ae715f0f303100c8badf2be1050e19</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_sections"&gt;
+    &lt;sn_onesearch_sections action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;client_script&gt;&lt;![CDATA[/*** Client-side functions utilized in the Results script HTML ***/
+function attachSC(sysID, type){
+	var isFieldHere = (g_form.getControl('comments') != null);
+	if (isFieldHere){
+		var scItem = new GlideRecord(type);
+		scItem.addQuery('sys_id', sysID);
+		scItem.query(scCallback);
+	}
+	else
+		g_form.addErrorMessage('Unable to set the "Additional comments" field because it is not available on this form.');
+	
+	function scCallback(scItem){
+		if (scItem.next()){
+			var msg = '[code]';
+			if (type == 'sc_cat_item_guide')
+				msg += '&lt;a href="com.glideapp.servicecatalog_cat_item_guide_view.do?sysparm_initial=true&amp;sysparm_guide=' + scItem.sys_id.toString() + '&amp;sysparm_stack=no"&gt;' + scItem.name + '&lt;/a&gt;&lt;br /&gt;';
+			else
+				msg += '&lt;a href="com.glideapp.servicecatalog_cat_item_view.do?sysparm_id=' + scItem.sys_id.toString() + '&amp;sysparm_preview=true&amp;sysparm_stack=no"&gt;' + scItem.name + '&lt;/a&gt;&lt;br /&gt;';
+			if (scItem.description != '')
+				msg += scItem.description;
+			else if (scItem.short_description != '')
+				msg += scItem.short_description;
+			msg += '[/code]';
+			var currComm = g_form.getValue('comments');
+			if (currComm != '')
+				currComm += '\n\n';
+			g_form.setValue('comments', currComm + msg);
+			g_form.addInfoMessage('Catalog item link &amp; details added to comments - Save record to finalize.');
+		}
+	}
+}]]&gt;&lt;/client_script&gt;
+        &lt;footer&gt;&lt;![CDATA[&lt;p&gt;&lt;em&gt;&lt;a title="Visit the SC" href="/nav_to.do?uri=catalog_home.do?sysparm_view=catalog_default" target="_blank" rel="nofollow"&gt;Visit the SC&lt;/a&gt;&lt;/em&gt;&amp;nbsp;&lt;/p&gt;]]&gt;&lt;/footer&gt;
+        &lt;label&gt;SC&lt;/label&gt;
+        &lt;order&gt;400&lt;/order&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[/*** Service Catalog search ***/
+
+/*
+Available variables:
+searchTerm - search string
+currSysID - sys_id of record being searched from
+tableName - table of record being searched from
+isNew - true/false if the record being searched from is a new record
+maxResults - maximum results to return, as defined on the parent searcher
+[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)
+
+Result variable:
+answer - array of HTML contents or links
+*/
+
+//Get debug logging setting
+var debug = gs.getProperty('sn_onesearch.debug');
+
+//Instantiate return array
+var returnArray = [];
+
+//Set query preferences
+var ordering = 'category';
+var encQuery = 'active=true^sc_catalogsNOT LIKE0b22fd2ad7021100b9a5c7400e610319';
+
+//Setup query
+var sc = new GlideRecord("sc_cat_item");
+sc.addEncodedQuery(encQuery);
+sc.addQuery('IR_AND_OR_QUERY', searchTerm);
+sc.setLimit(maxResults);
+sc.orderByDesc(ordering);
+sc.query();
+while (sc.next()) {
+	//Check permissions. If user is allowed, build HTML link to return
+	if (sc.canRead() &amp;&amp; (sc.roles.nil() || gs.hasRole(sc.roles))){
+		if (this.isEntitledSC(sc) == true){
+			var link = '';
+			link += '&lt;table&gt;&lt;tr&gt;';
+			var categoryString = '';
+			if (!sc.name.nil())
+				categoryString = sc.name + ' - ';
+			//Generate link &amp; button for Order Guide
+			if (sc.sys_class_name == "sc_cat_item_guide" ) {
+				//Add 'Attach' button w/ onClick function
+				//onClick function declared in Client script field
+				var attachButtonText = ' Attach';
+				link += '&lt;td style="padding-right:10px;padding-bottom:2px"&gt;&lt;button type="button" class="btn btn-default btn-xs" title="Add Catalog link to Incident comments" onclick="attachSC(\'' + sc.sys_id.toString() + '\', \'sc_cat_item_guide\');"&gt;&lt;span class="glyphicon glyphicon-ok" aria-hidden="true"&gt;&lt;/span&gt;' + attachButtonText + '&lt;/button&gt;&lt;/td&gt;';
+				link += '&lt;td style="padding-bottom:5px"&gt;&lt;a href="/com.glideapp.servicecatalog_cat_item_guide_view.do?sysparm_initial=true&amp;sysparm_guide=' + sc.sys_id.toString() + '&amp;sysparm_stack=no" tabindex="-1" target="_blank" ';
+			}
+			//Generate link &amp; button for Catalog Item
+			else{
+				//Add 'Attach' button w/ onClick function
+				//onClick function declared in Client script field
+				link += '&lt;td style="padding-right:10px;padding-bottom:2px"&gt;&lt;button type="button" class="btn btn-default btn-xs" title="Add Catalog link to Incident comments" onclick="attachSC(\'' + sc.sys_id.toString() + '\', \'sc_cat_item\');"&gt;&lt;span class="glyphicon glyphicon-ok" aria-hidden="true"&gt;&lt;/span&gt; Attach&lt;/button&gt;&lt;/td&gt;';
+				link += '&lt;td style="padding-bottom:5px"&gt;&lt;a href="/com.glideapp.servicecatalog_cat_item_view.do?sysparm_id=' + sc.sys_id.toString() + '&amp;sysparm_preview=true&amp;sysparm_stack=no" tabindex="-1" target="_blank" ';
+			}
+			//Add hover preview functionality
+			link += 'onmousemove="popDiv(event, \''+ sc.sys_id + '\');" onmouseout="lockPopupID(event, \'' + sc.sys_id + '\');" ';
+			//Continue link
+			link += 'onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\'));popupOpenStandard(\'com.glideapp.servicecatalog_cat_item_view.do?sysparm_id=' + sc.sys_id.toString() + '&amp;sysparm_preview=true&amp;sysparm_stack=no\'); return false;"&gt;' + categoryString + sc.name + '&lt;/a&gt;&lt;/td&gt;';
+			//Close out section
+			link += '&lt;/tr&gt;&lt;/table&gt;';
+			//Push the full search result HTML link onto the return array
+			returnArray.push(link);
+		}
+	}
+}
+if (debug == 'true')
+	gs.info('Onesearch: Results of SC script = ' + returnArray.toString());
+answer = returnArray;
+
+//Check Service Catalog Entitlements for user access
+function isEntitledSC(scItem){
+	var answer = true;
+	
+	//Check if user has an entitlement override role
+	var entitlementOverrideRoles = gs.getProperty("glide.sc.entitlement.override") + '';
+	var userOverrides = gs.hasRole(entitlementOverrideRoles);
+	if (userOverrides == true &amp;&amp; entitlementOverrideRoles != ''){
+		//Do nothing, answer is already true
+	}
+	
+	//Check results of entitlements &amp; entitlement script
+	else{
+		var itemObject = new GlideappCatalogItem.get(scItem.sys_id);
+		answer = itemObject.canView();
+		if (answer == true || !scItem.entitlement_script.nil()){
+			try{
+				var scEvaluator = new GlideScopedEvaluator();
+				var entitlementScriptResult = scEvaluator.evaluateScript(scItem, 'entitlement_script');
+				if (entitlementScriptResult == false)
+					answer = entitlementScriptResult;
+			}
+			catch(err){/*Do nothing, answer is already true*/}
+		}
+	}
+	return answer;
+}]]&gt;&lt;/script&gt;
+        &lt;searcher display_value="Sample advanced form searcher (links &amp;amp; buttons)"&gt;3b1728ef0f203100c8badf2be1050eeb&lt;/searcher&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2014-12-10 15:44:42&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;97ae715f0f303100c8badf2be1050e19&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;38&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2016-01-14 14:22:05&lt;/sys_updated_on&gt;
+    &lt;/sn_onesearch_sections&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:02</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>8990464e44e5420002addd3ec4bf4ab6</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>SC</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_8990464e44e5420002addd3ec4bf4ab6</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2016-01-14 14:22:40</sys_updated_on>
+        <tablename>sn_onesearch_sections</tablename>
+    </sys_metadata_link>
+</record_update>

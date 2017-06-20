@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>**Do not edit - this may be updated in future OneSearch versions&#13;
+UI Script to support the OneSearch application.</description>
+        <global>false</global>
+        <name>sn_onesearch.onesearch_js</name>
+        <script><![CDATA[(function(){
+	var osApp = angular.module('onesearch', ['ui.bootstrap','ngAnimate']);
+	
+	//Directive to allow dynamic compilation of HTML for OneSearch skins
+	osApp.directive('dynamic', function ($compile) {
+		return {
+			restrict: 'A',
+			replace: true,
+			link: function (scope, ele, attrs) {
+				scope.$watch(attrs.dynamic, function(html) {
+					ele.html(html);
+					$compile(ele.contents())(scope);
+				});
+			}
+		};
+	});
+	
+	//App controller
+	osApp.controller('OneSearchController', function($scope, $sce){
+		//Variables from UI Macro
+		//itemID = sys_id of catalog item (where applicable)
+		//pageID = sys_id of the UI page (where applicable)
+		//fetchingMessage = message to display when fetching search results
+		//waitingMessage = message to display when awaiting search initiation
+		//emptyMessage = message to display when no search results found
+		//searchPrompt = prompt displayed above search field
+		//paramSeachTerm = search term passed in via sysparm_onesearch URL param
+		//debugOneSearch = is debugging active or inactive?
+		
+		//Initialize variables
+		var pageURL = ''; //full URL of the current page (where applicable)
+		var searcherField = ''; //field being searched against
+		var tableName = ''; //name of table being searched against
+		var currSysID = ''; //sys_id of the record being searched against
+		var timer; //timer variable for field watch
+		var isNew = ''; //is it a new record? (for form searchers)
+		var activeSection = ''; //label of the currently active section
+		var lastSearchTerm = []; //array of last search terms for each section
+		var addFieldChanged = []; //array of flags if an 'additional fields' field has changed since last click for each section
+		var dynamic = ''; //Determines whether search results are real-time or only when section is clicked
+		var backgroundRefresh = ''; //Determines whether hidden section results refresh in background or only when viewed
+		var alwaysVisible = ''; //Determines whether sections are always visible or only visible when field is populated
+		var addFieldsArray = []; //Array of additional fields whose value is needed to process search results, as specified in searcher definition
+		var fetchingIcon = '<i class="glyphicon glyphicon-repeat gly-spin"></i>'; //Spinny icon when search is running
+		$scope.searcherType = ''; //type of searcher in use
+		$scope.fieldValue = ''; //string value being searched against
+		$scope.searcherID = ''; //sys_id of the searcher in use
+		$scope.countBadge = false; //Determines whether sections headers show a badge with the search result count
+		$scope.hideEmptySections = false; //Determines whether sections with no search results are hidden from view
+		$scope.skin = ''; //Skin (UI Macro) selected for results display
+		$scope.fieldPopped = false; //is search field populated?
+		$scope.sections = []; //array of searcher sections
+		$scope.sectionResultCounts = []; //array of searcher section result counts
+		$scope.search_results = []; //array of search result links
+		//Collapsible variables
+		$scope.collapsible = 'false'; //Is view collapsible?
+		$scope.collapsed = 'false'; //Is view collapsed, based on user preference?
+		//Typeahead variables
+		$scope.typeahead = 'false'; //is typeahead enabled for this searcher?
+		$scope.typeahead_values = []; //array of typeahead values
+		//Pagination variables
+		$scope.clientScripts = []; //array of searcher client scripts
+		$scope.paginate = 'false'; //is pagination enabled for this searcher?
+		$scope.currentPage = 1; //Tracks current page or results
+		$scope.itemsPerPage = 999; //Max number of items per page
+		
+		//Initialize correct type of searcher
+		$scope.init = function (){
+			if (debugOneSearch == "true")
+				console.log('OneSearch: Is starting...');
+			
+			//Set page URL value
+			try{pageURL = window.location.href;}
+			catch(pageURLErr){pageURL = '';}
+			
+			//Determine if g_form object exists
+			var gFormExists = true;
+			try{g_form.getUniqueValue();}
+			catch(gFormErr){gFormExists = false;}
+			
+			if (gFormExists && g_form.getUniqueValue() != '')
+				$scope.searcherType = 'form';
+			else if (itemID)
+				$scope.searcherType = 'catalog';
+			else if (pageID)
+				$scope.searcherType = 'page';
+			else if (pageURL)
+				$scope.searcherType = 'other';
+			//If unable to get param from server, try from client
+			if (paramSearchTerm == '')
+				paramSearchTerm = $scope.getUrlParameter('sysparm_onesearch');
+			getSections();
+		};
+		
+		//Return true/false of whether the given section is selected
+		$scope.sectionSelected = function(checkSection){
+			return activeSection === checkSection;
+		};
+		
+		//Return true/false of whether the section is empty and should be hidden
+		//Checks if (setting is true) AND (there are no results OR were no results at last search trigger)
+		//Checking last trigger creates a less glitchy user experience when searching
+		$scope.hideSection = function(numResults, section){
+			return ($scope.hideEmptySections && (numResults == '0' || $scope.search_results[section]+'' == [emptyMessage]+''));
+		};
+		
+		//Function on selection of a new section
+		$scope.selectSection = function(setSection){
+			activeSection = setSection;
+			runSearch('click', '');
+		};
+		
+		//Handler for rendering HTML links in Angular
+		$scope.renderHTML = function(html_code){
+			return $sce.trustAsHtml(html_code);
+		};
+		
+		//Grab a URL parameter
+		$scope.getUrlParameter = function(param){
+			var returnVal = '';
+			var pageURL = window.location.search.substring(1);
+			var urlVars = pageURL.split('&');
+			var urlVarDecoded;
+			var paramName;
+			for (var i = 0; i < urlVars.length; i++) {
+				urlVarDecoded = decodeURIComponent(urlVars[i]);
+				paramName = urlVarDecoded.split('=');
+				if (paramName[0] == param) {
+					if (paramName[1] != null){
+						returnVal = paramName[1];
+						break;
+					}
+				}
+			}
+			return returnVal;
+		};
+		
+		//checkSearchField function available from within $scope
+		//Useful for triggering within Skins w/ programmatically generated fields
+		$scope.checkSearchField = function(field, event){
+			checkSearchField(field, event);
+		};
+		
+		//Given a field ID, set the field to a desired value
+		$scope.setFieldValue = function(searchType, field, value){
+			if (searchType == 'form'){
+				try{
+					if (g_form.getControl(field))
+						$(g_form.getControl(field)).value = value;
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot set field value for nonexistant field ' + field);
+				}
+				catch(errForm){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting value of field ' + field + ' to ' + value);
+				}
+			}
+			else if (searchType == 'catalog'){
+				try{
+					if (document.getElementById(field))
+						document.getElementById(field).value = value;
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot set field value for nonexistant field ' + field);
+				}
+				catch(errCat){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting value of field ' + field + ' to ' + value);
+				}
+			}
+			else if (searchType == 'page' || searchType == 'other'){
+				try{
+					if (document.getElementById(field))
+						document.getElementById(field).value = value;
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot set field value for nonexistant field ' + field);
+				}
+				catch(errPage){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting value of field ' + field + ' to ' + value);
+				}
+			}
+		};
+		
+		//Return a link to the current searcher, pre-populated with search term
+		$scope.getLink = function(){
+			var encodedSearchTerm = encodeURIComponent($scope.fieldValue.trim());
+			var newURL = window.location.href.toString();
+			if (newURL.indexOf('sysparm_onesearch') > -1)
+				newURL = newURL.replace(/sysparm_onesearch=.*/, 'sysparm_onesearch=' + encodedSearchTerm);
+			else if (newURL.indexOf('?') > -1)
+				newURL = newURL + '&sysparm_onesearch=' + encodedSearchTerm;
+			else
+				newURL = newURL + '?sysparm_onesearch=' + encodedSearchTerm;
+			return newURL;
+		};
+		
+		//Return an ampersand (for use in html scripts)
+		$scope.getAmp = function(){
+			return '&';
+		};
+		
+		//Normal javascript alert, but available in scope
+		$scope.aAlert = function(text){
+			alert(text);
+		};
+		
+		//Normal javascript prompt, but available in scope
+		$scope.aPrompt = function(text, value){
+			prompt(text, value);
+		};
+		
+		//Toggle expanded/collapsed results view & set user preference value
+		//Accepts true/false parameter to set user preference
+		$scope.toggleCollapse = function(setPref){
+			if ($scope.collapsed == 'true')
+				$scope.collapsed = 'false';
+			else
+				$scope.collapsed = 'true';
+			if (setPref && setPref != false)
+				setPreference('onesearch_collapsed', $scope.collapsed);
+		};
+		
+		//Find the appropriate searcher & sections for this context
+		getSections = function(){
+			var ga = new GlideAjax('sn_onesearch.oneSearchAjax');
+			ga.addParam('sysparm_name', 'getSections');
+			ga.addParam('sysparm_type', $scope.searcherType);
+			if ($scope.searcherType == 'form'){
+				currSysID = g_form.getUniqueValue();
+				tableName = g_form.getTableName();
+				ga.addParam('sysparm_table_name', tableName);
+				isNew = g_form.isNewRecord().toString();
+				ga.addParam('sysparm_is_new', isNew);
+			}
+			else if ($scope.searcherType == 'catalog'){
+				currSysID = itemID; //Not really needed
+				tableName = 'sc_cat_item'; //Not really needed
+				ga.addParam('sysparm_item', itemID);
+			}
+			else if ($scope.searcherType == 'page'){
+				ga.addParam('sysparm_page_id', pageID);
+			}
+			else if ($scope.searcherType == 'other'){
+				ga.addParam('sysparm_page_url', pageURL);
+			}
+			ga.getXMLAnswer(processSectionResults);
+		};
+		
+		//Asynchronous callback to process section results & setup field watch
+		processSectionResults = function(results){
+			if (results){
+				var resultsObject = JSON.parse(results);
+				$scope.searcherID = resultsObject.searcherID;
+				searcherField = resultsObject.searcherField;
+				var runImmediate = resultsObject.runImmediate;
+				backgroundRefresh = resultsObject.backgroundRefresh;
+				dynamic = resultsObject.dynamic;
+				alwaysVisible = resultsObject.alwaysVisible;
+				var countBadgeFlag = resultsObject.countBadgeFlag;
+				if (countBadgeFlag == 'true' && backgroundRefresh == 'true' && dynamic == 'true')
+					$scope.countBadge = true;
+				else
+					$scope.countBadge = false;
+				var hideEmptySectionsFlag = resultsObject.hideEmptySectionsFlag;
+				if (hideEmptySectionsFlag == 'true' && backgroundRefresh == 'true' && dynamic == 'true')
+					$scope.hideEmptySections = true;
+				else
+					$scope.hideEmptySections = false;
+				$scope.skin = resultsObject.skin;
+				$scope.paginate = resultsObject.paginate;
+				//If pagination disabled, leave items per page at maximum
+				if ($scope.paginate == 'true')
+					$scope.itemsPerPage = resultsObject.itemsPerPage;
+				$scope.collapsible = resultsObject.collapsible;
+				//If collapsibility is enabled, check user preference for current state
+				if ($scope.collapsible == 'true')
+					$scope.collapsed = resultsObject.collapsed;
+				$scope.typeahead = resultsObject.typeahead;
+				//If enabled, fetch typeahead values for searcher
+				if ($scope.typeahead == 'true')
+					getTypeaheadValues();
+				if (resultsObject.addFields){
+					addFieldsArray = resultsObject.addFields;
+				}
+				if (resultsObject.sections != ''){
+					//Fetch client scripts for searcher
+					getClientScripts();
+					var sectionsArray = resultsObject.sections;
+					//Render sections & labels
+					$scope.$apply(function(){
+						$scope.sections = sectionsArray;
+						activeSection = sectionsArray[0];
+					});
+					//Setup field watch for main search field
+					setFieldWatch($scope.searcherType, searcherField);
+					//Setup field watches for additional fields
+					for (var i = 0; i < addFieldsArray.length; i++) {
+						setFieldWatch($scope.searcherType, addFieldsArray[i]);
+					}
+					//Set addFieldsChanged flag to 'false' for all sections initially
+					if (addFieldsArray.length > 0)
+						resetAddFieldChanged(false);
+					//If showing result counts, zero them out initially
+					if ($scope.countBadge == true)
+						zeroCounts();
+				}
+				
+				//If a search term came in via parameter, set the field value
+				//and run search now
+				if (paramSearchTerm){
+					$scope.setFieldValue($scope.searcherType, searcherField, paramSearchTerm);
+					runSearch('click', '');
+					if (backgroundRefresh == 'true' && dynamic == 'true' && $scope.fieldValue != '')
+						runGreedySearch('');
+				}
+				
+				//If this searcher is configured as 'immediate', run it now
+				else if (runImmediate == 'true'){
+					runSearch('click', '');
+					if (backgroundRefresh == 'true' && dynamic == 'true' && $scope.fieldValue != '')
+						runGreedySearch('');
+				}
+				//If alwaysVisible is true, set fieldPopped to show sections
+				if (alwaysVisible == 'true')
+					$scope.$apply(function(){$scope.fieldPopped = true;});
+			}
+		};
+		
+		//Find the appropriate typeahead values for this context
+		getTypeaheadValues = function(){
+			var ga = new GlideAjax('sn_onesearch.oneSearchAjax');
+			ga.addParam('sysparm_name', 'getTypeaheadValues');
+			ga.addParam('sysparm_searcher_id', $scope.searcherID);
+			ga.getXMLAnswer(processTypeaheadValueResults);
+		};
+		
+		//Asynchronous callback to process typeahead value results
+		processTypeaheadValueResults = function(results){
+			if (results){
+				var resultsArray = JSON.parse(results);
+				$scope.$apply(function(){
+					$scope.typeahead_values = resultsArray;
+				});
+			}
+		};
+		
+		//Find the appropriate client scripts for this context
+		getClientScripts = function(){
+			var ga = new GlideAjax('sn_onesearch.oneSearchAjax');
+			ga.addParam('sysparm_name', 'getClientScripts');
+			ga.addParam('sysparm_searcher_id', $scope.searcherID);
+			ga.getXMLAnswer(processClientScriptResults);
+		};
+		
+		//Asynchronous callback to process client script results
+		processClientScriptResults = function(results){
+			if (results){
+				var resultsArray = JSON.parse(results);
+				$scope.$apply(function(){
+					$scope.clientScripts = resultsArray;
+				});
+			}
+		};
+		
+		//Setup field watches
+		setFieldWatch = function(searchType, searchField){
+			var field = '';
+			var fieldType = '';
+			if (searchType == 'form'){
+				try{
+					if (g_form.getControl(searchField)){
+						fieldType = $(g_form.getControl(searchField)).type;
+						field = $(g_form.getControl(searchField)).id;
+						if (fieldType.toString().indexOf('text') > -1)
+							Event.observe(field, 'keyup', function(event){checkSearchField(searchField, event);});
+						else
+							Event.observe(field, 'change', function(event){checkSearchField(searchField, event);});
+					}
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot setup field watch on nonexistant field ' + searchField);
+				}
+				catch(errForm){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting up field watch on field ' + searchField + ' of type ' + fieldType);
+				}
+			}
+			else if (searchType == 'catalog'){
+				try{
+					if (document.getElementById(searchField)){
+						fieldType = document.getElementById(searchField).type;
+						field = document.getElementById(searchField).id;
+						if (fieldType.toString().indexOf('text') > -1)
+							Event.observe(field, 'keyup', function(event){checkSearchField(searchField, event);});
+						else
+							Event.observe(field, 'change', function(event){checkSearchField(searchField, event);});
+					}
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot setup field watch on nonexistant field ' + searchField);
+				}
+				catch(errCat){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting up field watch on field ' + searchField + ' of type ' + fieldType);
+				}
+			}
+			else if (searchType == 'page' || searchType == 'other'){
+				try{
+					if (document.getElementById(searchField)){
+						fieldType = document.getElementById(searchField).type;
+						field = document.getElementById(searchField).id;
+						if (fieldType.toString().indexOf('text') > -1)
+							Event.observe(field, 'keyup', function(event){checkSearchField(searchField, event);});
+						else
+							Event.observe(field, 'change', function(event){checkSearchField(searchField, event);});
+					}
+					else if (debugOneSearch == "true")
+						console.log('OneSearch: Cannot setup field watch on nonexistant field ' + searchField);
+				}
+				catch(errPage){
+					if (debugOneSearch == "true")
+						console.log('OneSearch: Error setting up field watch on field ' + searchField + ' of type ' + fieldType);
+				}
+			}
+		};
+		
+		//Check search field whenever space/enter key is pressed or 1 second since last keypress
+		checkSearchField = function(field, event){
+			//Flip addFieldChanged to true for all sections if not primary search field
+			if (field != searcherField){
+				resetAddFieldChanged(true);
+			}
+			var keyPressed = event.keyCode || event.charCode;
+			if (keyPressed == '32' || keyPressed == '13'){
+				runSearch('event', field);
+				if (backgroundRefresh == 'true' && dynamic == 'true' && ($scope.fieldValue != '' || field != searcherField))
+					runGreedySearch(field);
+			}
+			else{
+				clearTimeout(timer);
+				timer = setTimeout(function validate(){
+					runSearch('event', field);
+					if (backgroundRefresh == 'true' && dynamic == 'true' && ($scope.fieldValue != '' || field != searcherField))
+						runGreedySearch(field);
+				},1000);
+			}
+		};
+		
+		//Run search against the search field
+		//types are 'event' (for dynamic) or 'click' (for manual)
+		runSearch = function(type, triggerField){
+			var lastTerm; //Variable to contain most recent search term for section
+			if ($scope.searcherType == 'form')
+				$scope.fieldValue = this.trimSearchTerm(g_form.getValue(searcherField));
+			else if ($scope.searcherType == 'catalog')
+				$scope.fieldValue = this.trimSearchTerm(document.getElementById(searcherField).value);
+			else if ($scope.searcherType == 'page' || $scope.searcherType == 'other')
+				$scope.fieldValue = this.trimSearchTerm(document.getElementById(searcherField).value);
+			if (type == 'click' || dynamic == 'true'){
+				//Run search if search value is empty and different than the last
+				//search term used for this particular section
+				lastTerm = lastSearchTerm[activeSection] + '';
+				if(($scope.fieldValue != '' && lastTerm != $scope.fieldValue) || addFieldChanged[activeSection] == true){
+					if (type == 'click' || !$scope.search_results[activeSection])
+						$scope.search_results[activeSection] = [fetchingMessage];
+					if ($scope.countBadge)
+						$scope.sectionResultCounts[$scope.sections.indexOf(activeSection)] = fetchingIcon;
+					//Save last search term for this section to eliminate
+					//multiple searches without a search term change
+					lastSearchTerm[activeSection] = $scope.fieldValue;
+					//Flip addFieldChanged flag for this section
+					if (addFieldsArray.length > 0)
+						addFieldChanged[activeSection] = false;
+					getSearchResults(activeSection);
+				}
+			}
+			else if (type == 'event' && dynamic == 'false'){
+				lastTerm = lastSearchTerm[activeSection] + '';
+				if(($scope.fieldValue != '' && lastTerm != $scope.fieldValue) || addFieldChanged[activeSection] == true)
+					$scope.search_results[activeSection] = [waitingMessage];
+			}
+			if ($scope.fieldValue != '' || (triggerField != '' && triggerField != searcherField)){
+				if (type == 'event')
+					$scope.$apply(function(){$scope.fieldPopped = true;});
+				//If triggered by ng-click, no need to $apply
+				else if (type == 'click')
+					$scope.fieldPopped = true;
+			}
+			else if ($scope.fieldValue == '' && triggerField == searcherField){
+				lastSearchTerm[activeSection] = '';
+				if (alwaysVisible == 'false'){
+					if (type == 'event')
+						$scope.$apply(function(){$scope.fieldPopped = false;});
+					//If triggered by ng-click, no need to $apply
+					else if (type == 'click')
+						$scope.fieldPopped = false;
+				}
+				else if (alwaysVisible == 'true'){
+					if (type == 'event'){
+						$scope.$apply(function(){$scope.search_results[activeSection] = [];});
+					}
+					//If triggered by ng-click, no need to $apply
+					else if (type == 'click'){
+						$scope.search_results[activeSection] = [];
+					}
+					$scope.$apply(function(){this.emptyHiddenSections();});
+				}
+			}
+		};
+		
+		//Empty non-visible search sections
+		emptyHiddenSections = function(){
+			for (var i=0; i < $scope.sections.length; i++) {
+				if ($scope.sections[i] != activeSection){
+					lastSearchTerm[$scope.sections[i]] = '';
+					$scope.search_results[$scope.sections[i]] = [];
+				}
+			}
+			if ($scope.countBadge == true)
+				zeroCounts();
+		};
+		
+		//Run searches to update results for currently hidden sections
+		runGreedySearch = function(triggerField){
+			for (var i=0; i < $scope.sections.length; i++) {
+				if ($scope.sections[i] != activeSection){
+					//Run search if search value is empty and different than
+					//the last search term used for this particular section
+					var lastTerm = lastSearchTerm[$scope.sections[i]] + '';
+					if(lastTerm != $scope.fieldValue  || (triggerField != '' && triggerField != searcherField)){
+						if (!$scope.search_results[$scope.sections[i]])
+							$scope.$apply(setFetch(i));
+						if ($scope.countBadge)
+							$scope.sectionResultCounts[i] = fetchingIcon;
+						//Save last search term for this section to eliminate
+						//multiple searches without a search term change
+						lastSearchTerm[$scope.sections[i]] = $scope.fieldValue;
+						//Flip addFieldChanged flag for this section
+						if (addFieldsArray.length > 0)
+							addFieldChanged[$scope.sections[i]] = false;
+						getSearchResults($scope.sections[i]);
+					}
+				}
+			}
+			
+			//Set fetching message for specified background searcher
+			function setFetch(index){
+				$scope.search_results[$scope.sections[index]] = [fetchingMessage];
+			}
+		};
+		
+		//Create array of additional needed fields, as specified on searcher
+		getAddFields = function(){
+			var i;
+			var addFieldsValuesArray = [];
+			if ($scope.searcherType == 'form'){
+				for (i=0; i < addFieldsArray.length; i++) {
+					try{
+						addFieldsValuesArray[i] = {};
+						addFieldsValuesArray[i].field = addFieldsArray[i];
+						addFieldsValuesArray[i].value = g_form.getValue(addFieldsArray[i]);
+					}
+					catch(errFormField){
+						if (debugOneSearch == "true")
+							console.log('OneSearch: Error getting additional form field values for ' + JSON.stringify(addFieldsArray[i]) + '.');
+					}
+				}
+			}
+			else if ($scope.searcherType == 'catalog'){
+				for (i=0; i < addFieldsArray.length; i++) {
+					try{
+						var adjustedFieldName = 'IO:' + addFieldsArray[i];
+						addFieldsValuesArray[i] = {};
+						addFieldsValuesArray[i].field = addFieldsArray[i];
+						addFieldsValuesArray[i].value = document.getElementById(adjustedFieldName).value;
+					}
+					catch(errCatField){
+						if (debugOneSearch == "true")
+							console.log('OneSearch: Error getting additional catalog variable values for ' + JSON.stringify(addFieldsArray[i]) + '.');
+					}
+				}
+			}
+			else if ($scope.searcherType == 'page' || $scope.searcherType == 'other'){
+				for (i=0; i < addFieldsArray.length; i++) {
+					try{
+						addFieldsValuesArray[i] = {};
+						addFieldsValuesArray[i].field = addFieldsArray[i];
+						addFieldsValuesArray[i].value = document.getElementById(addFieldsArray[i]).value;
+					}
+					catch(errPageField){
+						if (debugOneSearch == "true")
+							console.log('OneSearch: Error getting additional page field value for ' + JSON.stringify(addFieldsArray[i]) + '.');
+					}
+				}
+			}
+			return addFieldsValuesArray;
+		};
+		
+		//Call glideAjax function to get search results
+		getSearchResults = function(searchSection){
+			var ga = new GlideAjax('sn_onesearch.oneSearchAjax');
+			ga.addParam('sysparm_name', 'getSearchResults');
+			ga.addParam('sysparm_searcher_id', $scope.searcherID);
+			ga.addParam('sysparm_search_term', $scope.fieldValue);
+			ga.addParam('sysparm_section', searchSection);
+			ga.addParam('sysparm_curr_sys_id', currSysID);
+			ga.addParam('sysparm_table_name', tableName);
+			ga.addParam('sysparm_is_new_record', isNew);
+			//Create parameters for all additional fields
+			var addFieldsValuesArray = this.getAddFields();
+			for (var i=0; i < addFieldsValuesArray.length; i++) {
+				var paramName = 'sysparm_field_' + addFieldsValuesArray[i].field;
+				var value = addFieldsValuesArray[i].value;
+				ga.addParam(paramName, value);
+			}
+			ga.getXMLAnswer(processSearchResults);
+		};
+		
+		//Asynchronous callback to process & render search results
+		processSearchResults = function(results){
+			var resultsSection = '';
+			var linksArray = [];
+			var resultsFooter = '';
+			var resultsCount = 0;
+			if (results != ''){
+				resultsObject = JSON.parse(results);
+				resultsSection = resultsObject.section;
+				//Build results link & add footer if it exists
+				if (resultsObject.results != ''){
+					linksArray = resultsObject.results;
+					resultsCount = linksArray.length;
+				}
+				else{
+					resultsCount = 0;
+					linksArray = [emptyMessage];
+				}
+				if (resultsObject.footer){
+					resultsFooter = resultsObject.footer;
+					linksArray.push(resultsFooter);
+				}
+			}
+			//Render search results in specified section
+			$scope.$apply(function(){$scope.search_results[resultsSection] = linksArray; $scope.sectionResultCounts[$scope.sections.indexOf(resultsSection)] = resultsCount.toString();});
+		};
+		
+		//Clean leading/trailing spaces from raw search term and make lowercase
+		trimSearchTerm = function(rawTerm){
+			return rawTerm.toLowerCase().trim();
+		};
+		
+		//Reset addFieldChanged array for all values
+		resetAddFieldChanged = function(value){
+			for (var i = 0; i < $scope.sections.length; i++)
+				addFieldChanged[$scope.sections[i]] = value;
+		};
+		
+		//Zero out result counts for all sections
+		zeroCounts = function(){
+			for (var i = 0; i < $scope.sections.length; i++)
+				$scope.sectionResultCounts[i] = '0';
+		};
+		
+		//Send data for log entry insertion
+		sendLogEntry = function(actionType, urlClicked){
+			var ga = new GlideAjax('sn_onesearch.oneSearchAjax');
+			ga.addParam('sysparm_name', 'ajaxInsertLog');
+			ga.addParam('sysparm_searcher_id', $scope.searcherID);
+			ga.addParam('sysparm_search_term', $scope.fieldValue);
+			ga.addParam('sysparm_section', activeSection);
+			ga.addParam('sysparm_action_type', actionType);
+			ga.addParam('sysparm_url_clicked', urlClicked);
+			ga.getXML();
+		};
+	});
+})();
+]]></script>
+        <script_name>onesearch_js</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-11-28 17:56:29</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>65faa8230f603100c8badf2be1050ed8</sys_id>
+        <sys_mod_count>713</sys_mod_count>
+        <sys_name>sn_onesearch.onesearch_js</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_ui_script_65faa8230f603100c8badf2be1050ed8</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-29 14:28:16</sys_updated_on>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

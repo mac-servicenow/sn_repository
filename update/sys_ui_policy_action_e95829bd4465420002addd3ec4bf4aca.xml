@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <disabled>ignore</disabled>
+        <field>items_per_page</field>
+        <mandatory>true</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 01:08:46</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>e95829bd4465420002addd3ec4bf4aca</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>items_per_page</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_ui_policy_action_e95829bd4465420002addd3ec4bf4aca</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-30 01:40:02</sys_updated_on>
+        <table>sn_onesearch_searchers</table>
+        <ui_policy display_value="OneSearch - Show Items per page">e04829bd4465420002addd3ec4bf4a65</ui_policy>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

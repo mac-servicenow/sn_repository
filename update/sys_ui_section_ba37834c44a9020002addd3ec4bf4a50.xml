@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_section caption="" section_id="ba37834c44a9020002addd3ec4bf4a50" sys_domain="global" table="sn_onesearch_skins" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 22:16:50</sys_created_on>
+            <sys_id>141197cc44a9020002addd3ec4bf4a5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 22:16:50</sys_updated_on>
+            <text>Skins allow advanced customization of searcher appearance. &lt;br /&gt;&lt;br /&gt;&lt;i&gt;Notes:&lt;ul&gt;&lt;li&gt;Skin editing is advanced functionality and requires AngularJS and HTML knowledge.&lt;/li&gt;&lt;li&gt;Always use "Insert &amp; Stay" to backup an existing skin before editing.&lt;/li&gt;&lt;li&gt;Skins control the rendering of the overall searcher and section organization. Search results appearance is controlled within the searcher section result script.&lt;/li&gt;&lt;li&gt;New HTML styles cannot be defined within a skin. To use custom styles, they must be defined at the page level or within the onesearch_widget UI macro.&lt;/li&gt;&lt;li&gt;OneSearch variables are used within skins but not otherwise documented - always reference the existing skins for help when building your own.&lt;/li&gt;&lt;/ul&gt;&lt;/i&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>141197cc44a9020002addd3ec4bf4a5d</element>
+            <position>0</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 22:16:50</sys_created_on>
+            <sys_id>541197cc44a9020002addd3ec4bf4a5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_skins" sys_domain="global" view="Default view">ba37834c44a9020002addd3ec4bf4a50</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 22:16:50</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>name</element>
+            <position>1</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 22:16:50</sys_created_on>
+            <sys_id>941197cc44a9020002addd3ec4bf4a5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_skins" sys_domain="global" view="Default view">ba37834c44a9020002addd3ec4bf4a50</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 22:16:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>description</element>
+            <position>2</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 22:16:50</sys_created_on>
+            <sys_id>d41197cc44a9020002addd3ec4bf4a5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_skins" sys_domain="global" view="Default view">ba37834c44a9020002addd3ec4bf4a50</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 22:16:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>xml</element>
+            <position>3</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 22:16:50</sys_created_on>
+            <sys_id>181197cc44a9020002addd3ec4bf4a5d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_skins" sys_domain="global" view="Default view">ba37834c44a9020002addd3ec4bf4a50</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 22:16:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>sn_onesearch_skins</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-24 21:33:51</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ba37834c44a9020002addd3ec4bf4a50</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>sn_onesearch_skins</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+            <sys_update_name>sys_ui_section_ba37834c44a9020002addd3ec4bf4a50</sys_update_name>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-24 21:33:51</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

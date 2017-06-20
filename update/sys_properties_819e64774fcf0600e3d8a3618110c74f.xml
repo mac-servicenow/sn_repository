@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>**Experimental** Filter out common search terms, and attempt to suppress the "Your text query contained only common words..." info message. (Utilizes the ts_stop and ts_index_stop tables to remove common terms from the search query - only valid for keyword queries using 'IR_AND_OR_QUERY' or 'IR_OR_QUERY')</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>sn_onesearch.suppress_common_terms</name>
+        <read_roles/>
+        <suffix>suppress_common_terms</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-10-18 15:44:08</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>819e64774fcf0600e3d8a3618110c74f</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>sn_onesearch.suppress_common_terms</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_properties_819e64774fcf0600e3d8a3618110c74f</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-18 16:20:24</sys_updated_on>
+        <type>boolean</type>
+        <value>true</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=819e64774fcf0600e3d8a3618110c74f"/>
+</record_update>

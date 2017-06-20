@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>88a993ed4425420002addd3ec4bf4aea</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_skins"&gt;
+    &lt;sn_onesearch_skins action="INSERT_OR_UPDATE"&gt;
+        &lt;description&gt;Classic tab skin used in original OneSearch &amp;amp; Dynamic Knowledge Search 2&amp;#13;
+-Pagination optional, depending on Searcher settings&amp;#13;
+-Collapsible optional, depending on Searcher settings&lt;/description&gt;
+        &lt;name&gt;Classic Tabs&lt;/name&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2015-07-29 14:45:06&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;88a993ed4425420002addd3ec4bf4aea&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;82&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2015-09-22 20:01:07&lt;/sys_updated_on&gt;
+        &lt;xml&gt;&lt;![CDATA[&lt;section ng-show="fieldPopped"&gt;
+	&lt;!--Client scripts rendering--&gt;
+	&lt;div ng-repeat="clientScript in clientScripts track by $index"&gt;
+		&lt;div ng-bind-html="renderHTML(clientScript)"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;!--Collapser rendering--&gt;
+	&lt;div id="collapser" ng-show="collapsible=='true'"&gt;
+		&lt;button type="button" id="collapse_button" class="btn btn-primary" ng-click="toggleCollapse(true)"&gt;&lt;span ng-class="{'glyphicon glyphicon-chevron-up':collapsed=='true','glyphicon glyphicon-chevron-down':collapsed!='true'}" aria-hidden="true"&gt;&lt;/span&gt;&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div id="collapsible" ng-class="{'collapse':collapsed=='true','collapse in':collapsed!='true'}"&gt;
+		&lt;!--Search sections rendering--&gt;
+		&lt;ul class="nav nav-pills"&gt;
+			&lt;li ng-repeat="section in sections" ng-class="{active:sectionSelected(section)}" ng-show="!hideSection(sectionResultCounts[$index], section)"&gt;
+				&lt;a ng-click="selectSection(section)"&gt;{{section}}&amp;#160;&lt;span class="badge" ng-show="countBadge"&gt;&lt;div ng-bind-html="renderHTML(sectionResultCounts[$index])"&gt;&lt;/div&gt;&lt;/span&gt;&lt;/a&gt;
+			&lt;/li&gt;
+		&lt;/ul&gt;
+		&lt;!--Search results rendering--&gt;
+		&lt;div ng-repeat="section in sections" ng-show="sectionSelected(section) &amp;amp;&amp;amp; !hideSection(sectionResultCounts[$index], section)"&gt;
+			&lt;!--Search results account for pagination, but only paginate when enabled in searcher--&gt;
+			&lt;div ng-repeat="search_link in search_results[section].slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" class="os-animate"&gt;
+				&lt;div ng-bind-html="renderHTML(search_link)"&gt;&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;!--Paginator rendering--&gt;
+			&lt;div ng-show="paginate == 'true' &amp;amp;&amp;amp; search_results[section].length &gt; itemsPerPage" class="text-center"&gt;
+				&lt;pagination
+					ng-model="currentPage"
+					total-items="search_results[section].length"
+					items-per-page="itemsPerPage"
+					class="pagination-sm"
+					previous-text="&amp;#8249;"
+					next-text="&amp;#8250;"&gt;
+	    		&lt;/pagination&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/section&gt;]]&gt;&lt;/xml&gt;
+    &lt;/sn_onesearch_skins&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:16</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>28a0464e44e5420002addd3ec4bf4aba</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Classic Tabs</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_28a0464e44e5420002addd3ec4bf4aba</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-22 20:01:13</sys_updated_on>
+        <tablename>sn_onesearch_skins</tablename>
+    </sys_metadata_link>
+</record_update>

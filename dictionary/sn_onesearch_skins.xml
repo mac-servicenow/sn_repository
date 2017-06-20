@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element attributes="update_synch=true" audit="true" label="Skins" max_length="40" name="sn_onesearch_skins" type="collection">
+        <element label="Description" max_length="1000" name="description" type="string"/>
+        <element display="true" label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element label="XML" mandatory="true" max_length="65000" name="xml" type="xml"/>
+    </element>
+</database>

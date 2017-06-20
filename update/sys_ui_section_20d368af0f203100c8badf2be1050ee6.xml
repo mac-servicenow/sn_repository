@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_ui_section caption="" section_id="20d368af0f203100c8badf2be1050ee6" sys_domain="global" table="sn_onesearch_searchers" version="3" view="">
+        <sys_ui_annotation action="INSERT_OR_UPDATE">
+            <is_plain_text>false</is_plain_text>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>bd8869bd4465420002addd3ec4bf4a41</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <text>A Searcher is a single search widget for a given form or page - it may contain multiple search sections. (Sections will be displayed on the related list at bottom.)&lt;ul&gt;&lt;li&gt;&lt;b&gt;Name&lt;/b&gt;: A descriptive name for this searcher.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Skin&lt;/b&gt;: The HTML skin inside which the searcher will render.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Type&lt;/b&gt;: The type of this searcher, or the type of record on which it will be displayed (form, catalog item, page).&lt;/li&gt;&lt;li&gt;&lt;b&gt;Form/Item/Page/URL&lt;/b&gt;: The specific form, item, or page on which this searcher will be displayed. (For types of 'Other', use either the full URL, the page name including .do, or the URL suffix)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Field/Variable/Field ID&lt;/b&gt;: The specific field or variable that will trigger a search and will provide the search string. (For field IDs, use the 'id' attribute of the HTML input field)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Additional fields/variables/field IDs&lt;/b&gt;: Additional values from the form, item, or page that are needed for the search. &lt;i&gt;Do not add additional fields unless you require them.&lt;/i&gt; (For field IDs, use a comma-separated list of the 'id' attribute of the HTML input field)&lt;/li&gt;&lt;li&gt;&lt;b&gt;Active&lt;/b&gt;: Determines whether this searcher is currently active.&lt;/li&gt;&lt;li&gt;&lt;b&gt;Description&lt;/b&gt;: Details on what this searcher contains and how to use it.&lt;/li&gt;&lt;/ul&gt;</text>
+            <type display_value="Info Box Blue">753f88a80f930000b12e6903cfe01206</type>
+        </sys_ui_annotation>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>bd8869bd4465420002addd3ec4bf4a41</element>
+            <position>0</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>fd8869bd4465420002addd3ec4bf4a41</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type>annotation</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>name</element>
+            <position>1</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>318869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>skin</element>
+            <position>2</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>718869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>type</element>
+            <position>3</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>b18869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>form</element>
+            <position>4</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>f18869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>field</element>
+            <position>5</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>358869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>additional_fields</element>
+            <position>6</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>758869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>item</element>
+            <position>7</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>b58869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>variable</element>
+            <position>8</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>f58869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>additional_variables</element>
+            <position>9</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>398869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>page</element>
+            <position>10</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>798869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>page_url</element>
+            <position>11</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>b98869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>order</element>
+            <position>12</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>f98869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>field_id</element>
+            <position>13</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>3d8869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>additional_field_ids</element>
+            <position>14</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>7d8869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>15</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>bd8869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>description</element>
+            <position>16</position>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2015-07-30 01:09:28</sys_created_on>
+            <sys_id>fd8869bd4465420002addd3ec4bf4a42</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="sn_onesearch_searchers" sys_domain="global" view="Default view">20d368af0f203100c8badf2be1050ee6</sys_ui_section>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2015-07-30 01:09:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>sn_onesearch_searchers</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2014-11-28 17:24:43</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>20d368af0f203100c8badf2be1050ee6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>sn_onesearch_searchers</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+            <sys_update_name>sys_ui_section_20d368af0f203100c8badf2be1050ee6</sys_update_name>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2014-11-28 17:24:43</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

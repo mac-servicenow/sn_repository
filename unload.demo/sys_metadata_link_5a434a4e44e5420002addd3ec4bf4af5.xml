@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>5a7309cc4c9d820002addb6a270b06ec</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_attachment">
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <encryption_context/>
+        <file_name>OneSearch_SimpleFormScreenshot.png</file_name>
+        <size_bytes>177374</size_bytes>
+        <size_compressed>165180</size_compressed>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-12 01:42:32</sys_created_on>
+        <sys_id>5a7309cc4c9d820002addb6a270b06ec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-12 01:42:32</sys_updated_on>
+        <table_name>sn_onesearch_searchers</table_name>
+        <table_sys_id>5c5ea2974c89820002addb6a270b0661</table_sys_id>
+    </sys_attachment>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:44:52</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>5a434a4e44e5420002addd3ec4bf4af5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>OneSearch_SimpleFormScreenshot.png</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_5a434a4e44e5420002addd3ec4bf4af5</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-30 21:44:52</sys_updated_on>
+        <tablename>sys_attachment</tablename>
+    </sys_metadata_link>
+</record_update>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_properties_category">
+    <sys_properties_category action="INSERT_OR_UPDATE">
+        <name>OneSearch</name>
+        <sys_class_name>sys_properties_category</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-11-28 17:46:58</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>83c860230f603100c8badf2be1050e97</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>OneSearch</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_properties_category_83c860230f603100c8badf2be1050e97</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-08-14 21:59:13</sys_updated_on>
+        <title><![CDATA[<p><strong>OneSearch Details and System Properties</strong></p>
+<p>OneSearch is an efficient and powerful search utility for ServiceNow. Use OneSearch to add dynamic searching capabilities to your forms, catalog items, and pages.</p>
+<ul><li>Create customized searchers for forms, catalog items, and pages.</li><li>Use server-side scripting to take full control of how searches are performed:</li><li><ul><li>Perform queries against any local table, knowledge base, service catalog, etc.</li><li>Utilize web services to query external data sources.</li><li>Perform advanced calculations and data correlations for customized results.</li></ul>
+</li><li>Use client-side scripting to add active elements to your search results</li><li><ul><li>Create buttons to automatically link search results to the current record.</li><li>Utilize GlideAjax to trigger server-side functionality.</li></ul>
+</li><li>Customize the look and feel of searchers to match your instance branding.</li><li>Add multiple sections to each searcher to provide all of the information your users require.</li><li>Set role-based visibility for each searcher section, providing relevant results by role.</li><li>Tailor the behavior of each searcher to maximize usability and performance.</li></ul>
+<p>OneSearch makes it simple to minimize time spent searching for answers and maximize productivity.</p>
+<p><em>Notes:</em></p>
+<ul><li><em>Any searched table must have &#39;text_index&#39; set to true to return results.<br /></em></li><li><em>For &#39;form&#39; searchers, the OneSearch formatter must be added to the appropriate form. Do this by right-clicking the form-header, clicking &#39;Configure form layout&#39;, and choosing the OneSearch formatter from the list. Place it where desired on the form, usually beneath the short description field.</em></li><li><em>For &#39;catalog item/record producer&#39; searcher, a new &#39;macro&#39; variable must be added to the item - this item must reference the &#39;onesearch_widget&#39; UI macro. Place the variable where desired on the form, usually beneath the variable that triggers the search.</em></li><li><em>For &#39;ui page&#39; or &#39;other (by url)&#39; searchers, an HTML input field must be added to the UI page and given an &#39;id&#39; attribute (ie - <span class="highLT">&lt;</span><span class="highELE">input</span> <span class="highATT">type&#61;</span><span class="highVAL">&#34;text&#34;</span> <span class="highATT">id&#61;</span><span class="highVAL">&#34;onesearch_input&#34; /</span><span class="highGT">&gt;). In addition, the &#39;onesearch_widget&#39; UI macro must be added to the UI page where desired, and it must reference the id of the input field (ie - &lt;g:macro_invoke macro&#61;&#34;sn_onesearch_onesearch_widget&#34; /&gt;). An example UI page, &#39;onesearch_page&#39;, is included with the app for reference. In order to utilize OneSearch on a CMS page or homepage, use the UI page within an iFrame or a dynamic content block. An example dynamic content block, &#39;OneSearch&#39;, is included with the app for reference.<br /></span></em></li><li><em><span class="highGT">Want to link directly to a set of search results? For a UI/CMS page or catalog item, simply add a parameter of &#39;sysparm_onesearch&#61;[search term]&#39; to the valid URL of the page (note: the full URL is not generally what is displayed in your browser bar - be sure to use the full link to your destination page).</span></em></li></ul>
+<p> </p>]]></title>
+    </sys_properties_category>
+    <sys_translated_text action="delete_multiple" query="documentkey=83c860230f603100c8badf2be1050e97"/>
+</record_update>

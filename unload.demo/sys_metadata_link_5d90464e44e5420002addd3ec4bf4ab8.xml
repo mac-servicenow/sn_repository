@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>unload.demo</directory>
+        <documentkey>dc5ea2974c89820002addb6a270b0661</documentkey>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;record_update table="sn_onesearch_sections"&gt;
+    &lt;sn_onesearch_sections action="INSERT_OR_UPDATE"&gt;
+        &lt;active&gt;true&lt;/active&gt;
+        &lt;client_script&gt;&lt;![CDATA[/*** Client-side functions utilized in the Results script HTML ***/
+/*
+Example:
+function linkPRB(prbSysID){
+	g_form.setValue('problem_id', prbSysID);
+}
+*/]]&gt;&lt;/client_script&gt;
+        &lt;footer&gt;&lt;![CDATA[&lt;p&gt;&lt;em&gt;&lt;a title="Visit the INC list. . ." href="/nav_to.do?uri=incident_list.do" target="_blank" rel="nofollow"&gt;Visit the INC list. . .&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;]]&gt;&lt;/footer&gt;
+        &lt;label&gt;INC&lt;/label&gt;
+        &lt;order&gt;300&lt;/order&gt;
+        &lt;roles/&gt;
+        &lt;script&gt;&lt;![CDATA[/*** Incident Search ***/
+
+/*
+Available variables:
+searchTerm - search string
+currSysID - sys_id of record being searched from
+tableName - table of record being searched from
+isNew - true/false if the record being searched from is a new record
+maxResults - maximum results to return, as defined on the parent searcher
+[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)
+
+Result variable:
+answer - array of HTML contents or links
+*/
+
+//Get debug logging setting
+var debug = gs.getProperty('sn_onesearch.debug');
+
+//Instantiate return array
+var returnArray = [];
+
+//Set query preferences
+var ordering = 'relevancy';
+var maxAgeDays = '90'; //Maximum age of results
+var recordType = 'incident';
+var encQuery = 'active=true^opened_atBETWEEN' + gs.daysAgoStart(maxAgeDays) + '@' + gs.minutesAgoEnd(0);
+
+//Setup query
+var resultRec = new GlideRecord(recordType);
+resultRec.addEncodedQuery(encQuery);
+//Do not return self as results
+if (tableName == recordType)
+	resultRec.addQuery('sys_id', '!=', currSysID);
+resultRec.addQuery('IR_AND_OR_QUERY', searchTerm);
+resultRec.setLimit(maxResults);
+resultRec.orderByDesc(ordering);
+resultRec.query();
+while (resultRec.next()) {
+	//Check permissions. If user is allowed, build HTML link to return
+	if (resultRec.canRead()){
+		var link;
+		link = '&lt;a href="' + recordType + '.do?sys_id=' + resultRec.sys_id.toString() + '" tabindex="-1" target="_blank" ';
+		//Add hover preview functionality
+		link += 'onmousemove="popRecordDiv(event, \'' + recordType + '\', \''+ resultRec.sys_id + '\');" onmouseout="lockPopupID(event, \'' + resultRec.sys_id + '\');" ';
+		//Continue link
+		link += 'onclick="sendLogEntry(\'conversion\', this.getAttribute(\'href\'));popupOpenStandard(\'' + recordType + '.do?sys_id=' + resultRec.sys_id.toString() + '\'); return false;"&gt;' + resultRec.number + '   -   ' + resultRec.short_description + '&lt;/a&gt;';
+		//Push the full search result HTML link onto the return array
+		returnArray.push(link);
+	}
+}
+if (debug == 'true')
+	gs.info('Onesearch: Results of INC script = ' + returnArray.toString());
+answer = returnArray;]]&gt;&lt;/script&gt;
+        &lt;searcher display_value="Sample simple form searcher (links only)"&gt;5c5ea2974c89820002addb6a270b0661&lt;/searcher&gt;
+        &lt;sys_created_by&gt;ben.hollifield@snc_SHARE&lt;/sys_created_by&gt;
+        &lt;sys_created_on&gt;2015-07-10 01:33:52&lt;/sys_created_on&gt;
+        &lt;sys_id&gt;dc5ea2974c89820002addb6a270b0661&lt;/sys_id&gt;
+        &lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;
+        &lt;sys_updated_by&gt;ben.hollifield@snc_SHARE&lt;/sys_updated_by&gt;
+        &lt;sys_updated_on&gt;2015-07-30 14:45:35&lt;/sys_updated_on&gt;
+    &lt;/sn_onesearch_sections&gt;
+&lt;/record_update&gt;
+</payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-30 21:33:03</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>5d90464e44e5420002addd3ec4bf4ab8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>INC</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_metadata_link_5d90464e44e5420002addd3ec4bf4ab8</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-30 21:33:03</sys_updated_on>
+        <tablename>sn_onesearch_sections</tablename>
+    </sys_metadata_link>
+</record_update>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <disabled>ignore</disabled>
+        <field>order</field>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-02 21:29:16</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>56237d854c0d420002addb6a270b0621</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>order</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_ui_policy_action_56237d854c0d420002addb6a270b0621</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-02 21:29:16</sys_updated_on>
+        <table>sn_onesearch_searchers</table>
+        <ui_policy display_value="OneSearch - Show other fields">ef574957ff73710002ad26ec8b649d6b</ui_policy>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

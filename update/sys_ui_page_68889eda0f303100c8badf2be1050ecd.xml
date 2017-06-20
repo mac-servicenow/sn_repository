@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>UI Page to support the OneSearch application</description>
+        <direct>false</direct>
+        <endpoint>sn_onesearch_onesearch_page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:macro_invoke macro="sn_onesearch_onesearch_widget" />
+</j:jelly>]]></html>
+        <name>onesearch_page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-12-07 14:58:39</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>68889eda0f303100c8badf2be1050ecd</sys_id>
+        <sys_mod_count>45</sys_mod_count>
+        <sys_name>onesearch_page</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_ui_page_68889eda0f303100c8badf2be1050ecd</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-09-18 13:35:09</sys_updated_on>
+    </sys_ui_page>
+</record_update>

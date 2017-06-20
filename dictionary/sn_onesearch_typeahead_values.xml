@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Typeahead Values" max_length="40" name="sn_onesearch_typeahead_values" type="collection">
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Last searched" max_length="40" name="last_searched" type="glide_date_time"/>
+        <element default="100" label="Order" max_length="40" name="order" type="integer"/>
+        <element label="Searcher" max_length="32" name="searcher" reference="sn_onesearch_searchers" reference_cascade_rule="delete" reference_qual="typeINpage,other^EQ" reference_qual_condition="typeINpage,other^EQ" type="reference"/>
+        <element display="true" label="Value" mandatory="true" max_length="100" name="value" type="string"/>
+        <index name="index">
+            <element name="searcher"/>
+        </index>
+    </element>
+</database>

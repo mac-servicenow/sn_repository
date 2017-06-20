@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_dictionary action="INSERT_OR_UPDATE" element="script" table="sn_onesearch_sections">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes/>
+        <audit>false</audit>
+        <calculation/>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label>Results script</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value>/*&#13;
+Available variables:&#13;
+searchTerm - search string&#13;
+currSysID - sys_id of record being searched from&#13;
+searcherSysId - sys_id of the searcher record being used&#13;
+sectionName - The display name of the searcher section being used&#13;
+tableName - table of record being searched from&#13;
+isNew - true/false if the record being searched from is a new record&#13;
+[additional fields] - Additional field variables, as specified in searcher configuration (accessible via field name, such as cmdb_ci)&#13;
+&#13;
+Result variable:&#13;
+answer - array of HTML contents or links&#13;
+*/</default_value>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>script</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <internal_type display_value="">script_plain</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>8000</max_length>
+        <name>sn_onesearch_sections</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-11-28 18:12:03</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>0e2e2c230f603100c8badf2be1050e38</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>Results script</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_dictionary_sn_onesearch_sections_script</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-08-13 19:53:45</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+</record_update>

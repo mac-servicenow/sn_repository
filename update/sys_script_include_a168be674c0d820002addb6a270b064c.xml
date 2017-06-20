@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>sn_onesearch.oneSearchAjax_ClientHelpersCore</api_name>
+        <client_callable>true</client_callable>
+        <description>**Do not edit - this may be updated in future OneSearch versions&#13;
+Script Include to provide helper functions for Section client scripts.</description>
+        <name>oneSearchAjax_ClientHelpersCore</name>
+        <script><![CDATA[var oneSearchAjax_ClientHelpersCore = Class.create();
+oneSearchAjax_ClientHelpersCore.prototype = Object.extendsObject(global.AbstractAjaxProcessor,  {
+	//Initialize
+	getInit: function() {
+		var initVals = {
+			debug:gs.getProperty('sn_onesearch.debug')
+		};
+		return initVals;
+	},
+	
+	//Ajax function add m2m_kb_task record for Attached Knowledge
+	attachKnowledgeToTask: function(){
+		var initVals = this.getInit();
+		var returnVal = '';
+		var taskID = this.getParameter('sysparm_task_id');
+		var kbID = this.getParameter('sysparm_kb_id');
+		var kbToTask = new GlideRecord("m2m_kb_task");
+		kbToTask.addQuery("kb_knowledge", kbID);
+		kbToTask.addQuery("task", taskID);
+		kbToTask.query();
+		if (!kbToTask.next()){
+			var kbToTaskNew = new GlideRecord("m2m_kb_task");
+			kbToTaskNew.kb_knowledge = kbID;
+			kbToTaskNew.task = taskID;
+			kbToTaskNew.insert();
+			returnVal = 'success';
+			if (initVals.debug == 'true')
+				gs.info('OneSearch: Inserted KB-Task linkage betweek task ' + kbToTaskNew.task.number + ' and KB ' + kbToTaskNew.kb_knowledge.number + '.');
+		}
+		else{
+			returnVal = 'cancelled';
+			if (initVals.debug == 'true')
+				gs.info('OneSearch: KB-Task linkage betweek task ' + kbToTask.task.number + ' and KB ' + kbToTask.kb_knowledge.number + ' already exists. No new link created.');
+		}
+		return returnVal;
+	},
+	
+	//Ajax function to set a parent/child relationship between 2 Incidents
+	setIncidentParent: function(){
+		var initVals = this.getInit();
+		var returnVal = '';
+		var childIncID = this.getParameter('sysparm_child_inc');
+		var parIncID = this.getParameter('sysparm_par_inc');
+		var childInc = new GlideRecord("incident");
+		if (childInc.get(childIncID)) {
+			if (childInc.parent_incident.sys_id.toString() == parIncID)
+				returnVal = 'cancelled';
+			else{
+				childInc.parent_incident = parIncID;
+				childInc.update();
+				returnVal = 'success';
+			}
+		}
+		else
+			returnVal = 'failure';
+		if (initVals.debug == 'true'){
+			var childNum;
+			var parentNum;
+			var taskRec = new GlideRecord("task");
+			if (taskRec.get(childIncID))
+				childNum = taskRec.number.toString();
+			taskRec = new GlideRecord("task");
+			if (taskRec.get(parIncID))
+				parentNum = taskRec.number.toString();
+			gs.info('OneSearch: Link of child ' + childNum + ' with parent ' + parentNum + ' resulted in ' + returnVal + '.');
+		}
+		return returnVal;
+	},
+	
+	type: 'oneSearchAjax_ClientHelpersCore'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2015-07-10 20:59:59</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>a168be674c0d820002addb6a270b064c</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>oneSearchAjax_ClientHelpersCore</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_script_include_a168be674c0d820002addb6a270b064c</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-07-30 20:20:51</sys_updated_on>
+    </sys_script_include>
+</record_update>

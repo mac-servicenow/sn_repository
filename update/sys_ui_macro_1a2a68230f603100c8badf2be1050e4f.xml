@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_macro">
+    <sys_ui_macro action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>general</category>
+        <description>**Do not edit unless you require custom &lt;styles&gt; - this may be updated in future OneSearch versions.&#13;
+**To change the appearance of the Searcher, update/create a skin at OneSearch&gt;Skins in the left nav.&#13;
+UI Macro to support the OneSearch application</description>
+        <media_type/>
+        <name>onesearch_widget</name>
+        <scoped_name>sn_onesearch_onesearch_widget</scoped_name>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-11-28 17:53:35</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>1a2a68230f603100c8badf2be1050e4f</sys_id>
+        <sys_mod_count>450</sys_mod_count>
+        <sys_name>onesearch_widget</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_ui_macro_1a2a68230f603100c8badf2be1050e4f</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-05 02:45:04</sys_updated_on>
+        <xml><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide">
+	
+<!--Check form view and suppress widget for SYS_POPUP-->
+<g:evaluate var="jvar_view">
+	var view = '${JS:sysparm_view}';
+	view;
+</g:evaluate>
+	
+<!--Grab OneSearch search term parameter, if it exists-->
+<g:evaluate var="jvar_param_search_term">
+	var paramSearchTerm = '${JS:sysparm_onesearch}';
+	paramSearchTerm;
+</g:evaluate>
+	
+<j:if test="${jvar_view != 'SYS_POPUP'}">
+	<!--Add required libraries-->
+	<g:requires name="sn_onesearch.angular.min.jsdbx"/>
+	<g:requires name="sn_onesearch.angular_animate_min.jsdbx"/>
+	<g:requires name="sn_onesearch.ui_bootstrap.min.jsdbx"/>
+	<g:requires name="sn_onesearch.onesearch_js.jsdbx"/>
+
+	<!--Gather system properties to define app behavior-->
+	<j:set var="jvar_css_active" value="${gs.getProperty('sn_onesearch.active_css')}"/>
+	<j:set var="jvar_css_inactive" value="${gs.getProperty('sn_onesearch.inactive_css')}"/>
+	<j:set var="jvar_css_link" value="${gs.getProperty('sn_onesearch.link_css')}"/>
+	<j:set var="jvar_css_active_pagination" value="${gs.getProperty('sn_onesearch.active_css_pagination')}"/>
+	<j:set var="jvar_css_horizontal" value="${gs.getProperty('sn_onesearch.horizontal_margin')}"/>
+	<j:set var="jvar_css_vertical" value="${gs.getProperty('sn_onesearch.vertical_margin')}"/>
+	<j:set var="jvar_fontSize" value="${gs.getProperty('sn_onesearch.font_size')}"/>
+	<j:set var="jvar_fetching_message" value="${gs.getProperty('sn_onesearch.fetching_message')}"/>
+	<j:set var="jvar_waiting_message" value="${gs.getProperty('sn_onesearch.waiting_message')}"/>
+	<j:set var="jvar_empty_message" value="${gs.getProperty('sn_onesearch.empty_message')}"/>
+	<j:set var="jvar_search_prompt" value="${gs.getProperty('sn_onesearch.search_prompt')}"/>
+	<j:set var="jvar_debug_onesearch" value="${gs.getProperty('sn_onesearch.debug')}"/>
+
+	<!--Grab the current item ID & pass to client (for catalog item searchers)-->
+	<g:evaluate var="jvar_item_id">
+		var itemID = '${JS:sysparm_id}';
+		itemID;
+	</g:evaluate>
+	
+	<!--Set variables for client script usage-->
+	<script>
+		debugOneSearch = "${jvar_debug_onesearch}";
+		itemID = '${jvar_item_id}';
+		pageID = '${RP.getParameterValue('sys_id')}';
+		fetchingMessage = '${jvar_fetching_message}';
+		waitingMessage = '${jvar_waiting_message}';
+		emptyMessage = '${jvar_empty_message}';
+		searchPrompt = '${jvar_search_prompt}';
+		paramSearchTerm = '${jvar_param_search_term}';
+	</script>
+	
+	<!--Setup CSS styles-->
+	<style>
+	#onesearch {
+		font-family: "Arial",Helvetica,Arial,sans-serif;
+		font-size: ${jvar_fontSize};
+		line-height: 1.42857143;
+		color: ${jvar_css_link};
+		margin-bottom: 10px;
+		background-color: #fff;
+	}
+		
+	#onesearch * {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	#onesearch :before, #onesearch :after {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+		
+	#onesearch a {
+		background: 0 0;
+		color: ${jvar_css_link};
+		text-decoration: none;
+	}
+		
+	#onesearch .nav {
+		padding-left: 0;
+		list-style: none;
+		margin-top: 0;
+		margin-bottom: 5px;
+	}
+		
+	#onesearch .nav li {
+		position: relative;
+		display: inline-block;
+		margin-bottom: 3px;
+	}
+
+	#onesearch .nav li a {
+		border-radius: 3px;
+		position: relative;
+		display: block;
+		padding: ${jvar_css_vertical} ${jvar_css_horizontal};
+		background-color: ${jvar_css_inactive};
+	}
+		
+	#onesearch li.active a,
+	#onesearch li.active a:hover, 
+	#onesearch li.active a:focus {
+		color: #fff;
+		background-color: ${jvar_css_active};
+	}
+
+	#onesearch table {
+		background: 0 0;
+	}
+
+	#onesearch .fujified_row {
+		border-top:none;
+		border-bottom:1px solid rgb(189, 192, 196);
+	}
+	#onesearch .fujified_header {
+		border-spacing: 0px;
+		border: 0px;
+		width: 100%;
+	}
+	#onesearch .fujified_hr {
+		width: 50%;
+	}
+	#onesearch .fujified_header_button {
+		padding: 0px 4px 0px 4px;
+	}
+	#onesearch .fujified_badge {
+		background-color: ${jvar_css_link};
+	}
+		
+	#onesearch .pagination li.active a {
+		background-color: ${jvar_css_active_pagination};
+		border-color: ${jvar_css_active_pagination};
+	}
+		
+	#onesearch .gly-spin {
+		-webkit-animation: spin 2s infinite linear;
+		-moz-animation: spin 2s infinite linear;
+		-o-animation: spin 2s infinite linear;
+		animation: spin 2s infinite linear;
+	}
+		
+	#onesearch @-moz-keyframes spin {
+		0% {
+			-moz-transform: rotate(0deg);
+	  	}
+	  	100% {
+			-moz-transform: rotate(359deg);
+	  	}
+	}
+	#onesearch @-webkit-keyframes spin {
+	  	0% {
+			-webkit-transform: rotate(0deg);
+	  	}
+	  	100% {
+			-webkit-transform: rotate(359deg);
+	  	}
+	}
+	#onesearch @-o-keyframes spin {
+	  	0% {
+			-o-transform: rotate(0deg);
+	  	}
+	  	100% {
+			-o-transform: rotate(359deg);
+	  	}
+	}
+	#onesearch @keyframes spin {
+	  	0% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+	  	}
+	  	100% {
+			-webkit-transform: rotate(359deg);
+			transform: rotate(359deg);
+	  	}
+	}
+	#onesearch .panel-heading .accordion-toggle:after {
+		/* symbol for "opening" panels */
+		font-family: 'Glyphicons Halflings';
+		content: "\e114";
+		float: right;
+		color: grey;
+	}
+		
+	#onesearch .panel-heading .accordion-toggle.collapsed:after {
+		/* symbol for "collapsed" panels */
+		content: "\e080";
+	}
+		
+	#onesearch .ng-hide {
+    	display: none;
+	}
+
+	#collapser {
+		text-align:center;
+	}
+	#collapser .btn {
+		background-color: ${jvar_css_inactive};
+		border: 0 none;
+		width: 75%;
+		height: 15px;
+		margin: 0 auto;
+		font-size: 8pt;
+		color: ${jvar_css_link};
+		vertical-align: middle;
+		padding: 0px;
+	}
+	#collapser .btn-primary:hover{
+    	background: ${jvar_css_active};
+	}
+	#collapser .btn-primary:focus,
+	#collapser .btn-primary:active{
+    	box-shadow: none;
+	}
+		
+	#onesearch .os-animate.ng-enter,
+	#onesearch .os-animate.ng-move{
+		webkit-transition:0.15s linear all;
+		moz-transition:0.15s linear all;
+		o-transition:0.15s linear all;
+		transition:0.15s linear all;
+	}
+	#onesearch .os-animate.ng-enter,
+	#onesearch .os-animate.ng-move{
+		opacity:0;
+	}
+	#onesearch .os-animate.ng-enter.ng-enter-active,
+	#onesearch .os-animate.ng-move.ng-move-active{
+		opacity:1;
+	}
+	</style>
+	
+	
+	<tr><td colspan="2">
+	<div id="onesearch">
+	<div id="osApp" ng-app="onesearch">
+	<div id="osController" ng-init="init()" ng-controller="OneSearchController as onesearch">
+		<!-- Only show OneSearch search prompt if type is 'page' or 'other' -->
+		<div class="ng-cloak" ng-if="searcherType=='page' || searcherType=='other'">
+			<p style="font-size:14px"><b>${jvar_search_prompt}</b></p>
+			<!-- Conditionally render typeahead or non-typeahead prompt -->
+			<div ng-if="typeahead=='true'">
+				<input id="onesearch_input" class="cat_item_option questionsettext form-control" value="" name="onesearch_input" style="width:100%; margin-bottom:10px" ng-model="selected" typeahead="value for value in typeahead_values | filter:$viewValue" typeahead-focus-first="false" typeahead-on-select="checkSearchField('onesearch_input','')"/>
+			</div>
+			<div ng-if="typeahead!='true'">
+				<input id="onesearch_input" class="cat_item_option questionsettext form-control" value="" name="onesearch_input" style="width:100%; margin-bottom:10px" />
+			</div>
+		</div>
+		<div class="ng-cloak" dynamic="skin"></div>
+	</div>
+	</div>
+	</div>
+	</td></tr>
+	
+</j:if>
+</j:jelly>]]></xml>
+    </sys_ui_macro>
+</record_update>

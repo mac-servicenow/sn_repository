@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>sn_onesearch.oneSearchAjax</api_name>
+        <client_callable>true</client_callable>
+        <description>**Do not edit - this may be updated in future OneSearch versions&#13;
+Script Include to support the OneSearch application</description>
+        <name>oneSearchAjax</name>
+        <script><![CDATA[var oneSearchAjax = Class.create();
+oneSearchAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	//Initialize
+	getInit: function() {
+		var initVals = {
+			debug:gs.getProperty('sn_onesearch.debug'),
+			logging:gs.getProperty('sn_onesearch.search_logging'),
+			verifyTerms:gs.getProperty('sn_onesearch.suppress_common_terms')
+		};
+		if (initVals.logging == 'true')
+			initVals.logCooldown = gs.getProperty('sn_onesearch.log_cooldown');
+		return initVals;
+	},
+	
+	//Return searcher settings & sections to be rendered in JSON formatted string
+	getSections: function(){
+		var initVals = this.getInit();
+		var tableName = this.getParameter('sysparm_table_name');
+		var itemID = this.getParameter('sysparm_item');
+		var type = this.getParameter('sysparm_type');
+		var isNew = this.getParameter('sysparm_is_new');
+		var pageID = this.getParameter('sysparm_page_id');
+		var pageURL = this.getParameter('sysparm_page_url');
+		if (initVals.debug == 'true')
+			gs.info('OneSearch: Fetching tabs to render for type ' + type + ' (TableName: ' + tableName + ') (ItemID: ' + itemID + ') (pageID: ' + pageID + ') (pageURL: ' + pageURL + ')');
+		var returnString = '';
+		var sections = [];
+		var searcherID = '';
+		var searcherField = '';
+		var runImmediate = 'false';
+		var backgroundRefresh = '';
+		var dynamic = '';
+		var alwaysVisible = 'false';
+		var countBadgeFlag = 'false';
+		var skin = '';
+		var hideEmptySectionsFlag = 'false';
+		var paginate = 'false';
+		var itemsPerPage = 0;
+		var typeahead = 'false';
+		var addFields = '';
+		//Determine if a Searcher exist for a given context
+		//If so, build an object to return
+		var searcher = new GlideRecord("sn_onesearch_searchers");
+		searcher.addQuery("active", true);
+		searcher.addQuery("type", type);
+		if (type == 'form'){
+			searcher.addQuery("form", tableName);
+			if (isNew == 'false')
+				searcher.addQuery("new_only", false);
+		}
+		else if (type == 'catalog'){
+			searcher.addQuery("item", itemID);
+		}
+		else if (type == 'page'){
+			searcher.addQuery("page", pageID);
+		}
+		else if (type == 'other'){
+			//Get full URL minus any parameters
+			var fullURL = pageURL.split("?")[0];
+			//Get page name from fullURL (ignore if there is no '.')
+			var pageName = fullURL.split("/").pop();
+			if (pageName.indexOf('.') == -1)
+				pageName = '';
+			//Get URL suffix from fullURL (ignore if there is a '.')
+			var URLsuffix = fullURL.split(".com/").pop().split("/")[0];
+			if (URLsuffix.indexOf('.') > -1)
+				URLsuffix = '';
+			if (initVals.debug == 'true'){
+				var msg = 'OneSearch: Extracted values from browser URL (' + pageURL + ') and attempting a match with "Page identifier is ' + fullURL + '"';
+				if (URLsuffix != '')
+					msg += ' or "Page identifier is ' + URLsuffix + '"';
+				if (pageName != '')
+					msg += ' or "Page identifier contains ' + pageName + '"';
+				msg += '.';
+				gs.info(msg);
+			}
+			//Build query based on URL portions extracted
+			var otherOrQuery = searcher.addQuery("page_url", fullURL);
+			if (pageName != '')
+				otherOrQuery.addOrCondition("page_url", "CONTAINS", pageName);
+			if (URLsuffix != '')
+				otherOrQuery.addOrCondition("page_url", URLsuffix);
+		}
+		searcher.orderBy("order");
+		searcher.query();
+		if (searcher.next()) {
+			var returnObject = {};
+			returnObject.searcherID = searcher.sys_id.toString();
+			returnObject.sections = this._getSearcherSections(returnObject.searcherID);
+			returnObject.backgroundRefresh = searcher.background_refresh.toString();
+			returnObject.dynamic = searcher.dynamic.toString();
+			returnObject.alwaysVisible = searcher.always_visible.toString();
+			returnObject.countBadgeFlag = searcher.count_badge.toString();
+			returnObject.hideEmptySectionsFlag = searcher.hide_empty_sections.toString();
+			returnObject.skin = searcher.skin.xml.toString();
+			returnObject.paginate = searcher.paginate.toString();
+			returnObject.itemsPerPage = searcher.items_per_page.toString();
+			//Check user preference & searcher setting for collapsible results
+			returnObject.collapsible = searcher.collapsible.toString();
+			if (returnObject.collapsible == 'true'){
+				var userCollapsePreference = new GlideRecord('sys_user_preference');
+				userCollapsePreference.addQuery('name','onesearch_collapsed');
+				userCollapsePreference.addQuery('user',gs.getUserID());
+				userCollapsePreference.query();
+				if (userCollapsePreference.next()){
+					returnObject.collapsed = userCollapsePreference.value.toString();
+				}
+				else{
+					returnObject.collapsed = 'false';
+				}
+			}
+			if (type == 'page' || type == 'other')
+				returnObject.typeahead = searcher.typeahead.toString();
+			if (type == 'form'){
+				returnObject.searcherField = searcher.field.toString();
+				returnObject.runImmediate = searcher.immediate_search.toString();
+				if (!searcher.additional_fields.nil())
+					returnObject.addFields = searcher.additional_fields.toString().split(',');
+			}
+			else if (type == 'catalog'){
+				returnObject.searcherField = 'IO:' + searcher.variable.sys_id.toString(); //IO is necessary for system variable naming
+				if (!searcher.additional_variables.nil())
+					returnObject.addFields = searcher.additional_variables.toString().split(',');
+			}
+			else if (type == 'page' || type == 'other'){
+				returnObject.searcherField = searcher.field_id.toString();
+				if (!searcher.additional_field_ids.nil())
+					returnObject.addFields = searcher.additional_field_ids.toString().split(',');
+			}
+			if (returnObject.sections.length > 0){
+				returnString = new global.JSON().encode(returnObject);
+			}
+			if (initVals.debug == 'true')
+				gs.info('OneSearch: Rendering sections - ' + returnObject.sections.toString() + ' for searcher ' + searcher.name);
+		}
+		else{
+			if (initVals.debug == 'true')
+				gs.info('OneSearch: No Searcher found for this context. No sections to render.');
+		}
+		if (initVals.debug == 'true' && returnString!= '')
+			gs.info('OneSearch: Returning sections string to the client - ' + returnString);
+		return returnString;
+	},
+	
+	//Return an array of sections for a single searcher
+	_getSearcherSections: function(searcherID){
+		var sectionArray = [];
+		var searcherSection = new GlideRecord("sn_onesearch_sections");
+		searcherSection.addQuery("active", true);
+		searcherSection.addQuery("searcher", searcherID);
+		searcherSection.orderBy("order");
+		searcherSection.query();
+		while (searcherSection.next()) {
+			//Only push section if user has appropriate role for section
+			if (gs.hasRole(searcherSection.roles.getDisplayValue()))
+				sectionArray.push(searcherSection.label.toString());
+		}
+		return sectionArray;
+	},
+	
+	//Return typeahead values in JSON formatted string
+	getTypeaheadValues: function(){
+		var initVals = this.getInit();
+		var searcherID = this.getParameter('sysparm_searcher_id');
+		var returnArray = [];
+		var returnString = '';
+		var typeaheadValue = new GlideRecord("sn_onesearch_typeahead_values");
+		typeaheadValue.addQuery("active", true);
+		typeaheadValue.addQuery("searcher", searcherID).addOrCondition("searcher", "");
+		typeaheadValue.addNotNullQuery('value');
+		typeaheadValue.orderBy('order');
+		typeaheadValue.query();
+		while (typeaheadValue.next())
+			returnArray.push(typeaheadValue.value.toString());
+		if (returnArray.length > 0)
+			returnString = new global.JSON().encode(returnArray);
+		if (initVals.debug == 'true')
+			gs.info('OneSearch: Returning typeahead values string to the client for searcher ' + searcherID + ' - ' + returnString);
+		return returnString;
+	},
+	
+	//Return client scripts in JSON formatted string
+	getClientScripts: function(){
+		var initVals = this.getInit();
+		var searcherID = this.getParameter('sysparm_searcher_id');
+		var returnArray = [];
+		var returnString = '';
+		var searcherSection = new GlideRecord("sn_onesearch_sections");
+		searcherSection.addQuery("active", true);
+		searcherSection.addQuery("searcher", searcherID);
+		searcherSection.addNotNullQuery('client_script');
+		searcherSection.query();
+		while (searcherSection.next())
+			returnArray.push('<script>' + searcherSection.client_script + '</script>');
+		if (returnArray.length > 0)
+			returnString = new global.JSON().encode(returnArray);
+		if (initVals.debug == 'true')
+			gs.info('OneSearch: Returning client script string to the client for searcher ' + searcherID + ' - ' + returnString);
+		return returnString;
+	},
+	
+	//Return search results to be rendered in JSON formatted string
+	getSearchResults: function(){
+		var initVals = this.getInit();
+		var searcherID = this.getParameter('sysparm_searcher_id');
+		var searchTerm = this.getParameter('sysparm_search_term');
+		var section = this.getParameter('sysparm_section');
+		var currSysID = this.getParameter('sysparm_curr_sys_id');
+		var tableName = this.getParameter('sysparm_table_name');
+		var isNew = this.getParameter('sysparm_is_new_record');
+		var maxResults = 999;
+		
+		//Handle search logging
+		if (initVals.logging == 'true'){
+			var userID = gs.getUserName();
+			this.insertLog('search', searcherID, searchTerm, '', section, userID);
+		}
+		var returnString = '';
+		if (initVals.debug == 'true')
+			gs.info('OneSearch: Fetching search results for searcher ' + searcherID + ' and section ' + section + ' for search term "' + searchTerm + '" on record ' + currSysID + ' and table ' + tableName);
+		
+		//Filter search terms or not, based on system property
+		var verifiedSearchTerm;
+		if (initVals.verifyTerms == 'true')
+			verifiedSearchTerm = this._verifySearchTerm(searchTerm);
+		else
+			verifiedSearchTerm = searchTerm;
+		
+		var searcherSection = new GlideRecord("sn_onesearch_sections");
+		searcherSection.addQuery("searcher", searcherID);
+		searcherSection.addQuery("label", section);
+		searcherSection.addQuery("active", true);
+		searcherSection.query();
+		if (searcherSection.next()) {
+			var returnObject = {};
+			if (!searcherSection.searcher.max_results.nil())
+				maxResults = searcherSection.searcher.max_results;
+			var evaluator = new GlideScopedEvaluator();
+			var vars = {};
+			
+			//Load vars with additional fields, if specified in the searcher
+			var addFieldsLogString = '';
+			var searcherRec = new GlideRecord("sn_onesearch_searchers");
+			if (searcherRec.get(searcherID) && ((searcherRec.type == 'form' && !searcherRec.additional_fields.nil()) || (searcherRec.type == 'catalog' && !searcherRec.additional_variables.nil()) || ((searcherRec.type == 'page' || searcherRec.type == 'other') && !searcherRec.additional_field_ids.nil()))) {
+				var addFieldsNames;
+				if (searcherRec.type == 'form')
+					addFieldsNames = searcherRec.additional_fields.toString().split(',');
+				else if (searcherRec.type == 'catalog')
+					addFieldsNames = searcherRec.additional_variables.toString().split(',');
+				else if (searcherRec.type == 'page' || searcherRec.type == 'other')
+					addFieldsNames = searcherRec.additional_field_ids.toString().split(',');
+				for (var i=0; i < addFieldsNames.length; i++) {
+					var paramName = 'sysparm_field_' + addFieldsNames[i];
+					//For catalog variables, substitute var name for sys_id
+					if (searcherRec.type == 'catalog'){
+						var catVar = new GlideRecord("item_option_new");
+						if (catVar.get(addFieldsNames[i]))
+							addFieldsNames[i] = catVar.name;
+					}
+					vars[addFieldsNames[i]] = this.getParameter(paramName);
+					if (initVals.debug == 'true')
+						addFieldsLogString += '(' + addFieldsNames[i] + ':' + vars[addFieldsNames[i]] + ')';
+				}
+				if (initVals.debug == 'true')
+					gs.info('OneSearch: Gathered additional fields for search -  ' + addFieldsLogString);
+			}
+			
+			vars.searchTerm = verifiedSearchTerm;
+			vars.currSysID = currSysID;
+			vars.searcherSysId = searcherID;
+			vars.sectionName = section;
+			vars.tableName = tableName;
+			vars.isNew = isNew;
+			vars.maxResults = maxResults;
+			var scriptResult = evaluator.evaluateScript(searcherSection, 'script', vars);
+			//If no results, send no result set
+			if (scriptResult.length > 0){
+				//Splice result set down to maxResults size
+				scriptResult = scriptResult.slice(0, maxResults);
+			}
+			
+			//Add footer HTML to results
+			var footerString = '';
+			if (!searcherSection.footer.nil()){
+				footerString = searcherSection.footer;
+				//Replace instances of {searchTerm}, {tableName}, or {currSysID}
+				//with their actual values from the search context
+				if (footerString != ''){
+					footerString = footerString.toString().replace(/\{searchTerm\}/g, searchTerm);
+					footerString = footerString.toString().replace(/\{tableName\}/g, tableName);
+					footerString = footerString.toString().replace(/\{currSysID\}/g, currSysID);
+				}
+			}
+			returnObject.section = section;
+			returnObject.results = scriptResult;
+			returnObject.footer = footerString;
+			returnString = new global.JSON().encode(returnObject);
+		}
+		if (initVals.debug == 'true' && returnString!= '')
+			gs.info('OneSearch: Returning search results string to the client for section ' + section + ' - ' + returnString);
+		return returnString;
+	},
+	
+	//Check search term. If it is only single character terms, or if all terms arestop words, then wipe them out of search (to suppress 'common terms' annoyance message)
+	_verifySearchTerm: function(searchTerm){
+		var searchTermArray = searchTerm.split(" ");
+		var commonTermsOnly = true;
+		var returnValue = '';
+		for (var i=0; i < searchTermArray.length; i++) {
+			//Check that term is long enough
+			if (searchTermArray[i].length > 1){
+				//Check ts_stop table
+				var stopWord = new GlideRecord("ts_stop");
+				stopWord.addQuery("active", true);
+				stopWord.addQuery("word", searchTermArray[i]);
+				stopWord.query();
+				if (!stopWord.next()){
+					//** ts_index_stop table check is disabled, due to dependendence on table - we don't know the table(s) being queried in the searcher section, so this omittance would be global and overly inclusive **
+					//Check ts_index_stop table
+					/*var tableHierarchy = new GlideTableHierarchy(tableName).getTables().toString(); //Get current table w/ all parent tables to ensure correct index stop words
+					stopWord = new GlideRecord("ts_index_stop");
+					stopWord.addQuery("stop_mode", "!=", "1");
+					stopWord.addQuery("index.table", "IN", tableHierarchy);
+					stopWord.addQuery("word", searchTermArray[i]);
+					stopWord.query();
+					if (!stopWord.next()) {
+						commonTermsOnly = false;
+						break;
+					}*/
+					commonTermsOnly = false;
+					break;
+				}
+			}
+		}
+		if (commonTermsOnly == false)
+			returnValue = searchTerm;
+		return returnValue;
+	},
+	
+	//Ajax digest log entry parameters & insert log
+	ajaxInsertLog: function(){
+		var initVals = this.getInit();
+		if (initVals.logging == 'true'){
+			var actionType = this.getParameter('sysparm_action_type');
+			var searcherID = this.getParameter('sysparm_searcher_id');
+			var searchTerm = this.getParameter('sysparm_search_term');
+			var urlClicked = this.getParameter('sysparm_url_clicked');
+			var section = this.getParameter('sysparm_section');
+			var userID = gs.getUserName();
+			this.insertLog(actionType, searcherID, searchTerm, urlClicked, section, userID);
+		}
+	},
+	
+	//Insert OneSearch log entry
+	insertLog: function(actionType, searcherID, searchTerm, urlClicked, section, userID){
+		var initVals = this.getInit();
+		var logAction = 'Inserting';
+		
+		//Check cooldown period to see whether to update an existing
+		//search log entry with latest searchTerm or spawn a new entry
+		//All conversions are logged
+		var spawnNewLog = true;
+		if (initVals.logCooldown > 0){
+			var lastSearchFromUser = new GlideRecord("sn_onesearch_log");
+			lastSearchFromUser.addQuery("user", userID);
+			lastSearchFromUser.addQuery("searcher", searcherID);
+			lastSearchFromUser.addEncodedQuery('sys_updated_onONjavascript:gs.minutesAgoStart(5)@javascript:gs.minutesAgoEnd(0)');
+			lastSearchFromUser.orderByDesc('sys_updated_on');
+			lastSearchFromUser.setLimit(1);
+			lastSearchFromUser.query();
+			if (lastSearchFromUser.next()) {
+				var lastSearch = new GlideDateTime(lastSearchFromUser.sys_updated_on).getNumericValue();
+				var nowNumeric = new GlideDateTime().getNumericValue();
+				var coolDown = initVals.logCooldown * 1000;
+				if ((nowNumeric < (lastSearch + coolDown)) && lastSearchFromUser.converted == false){
+					spawnNewLog = false;
+					logAction = 'Updating';
+					lastSearchFromUser.search_term = searchTerm;
+					if (actionType == 'conversion'){
+						lastSearchFromUser.converted = true;
+						lastSearchFromUser.url = urlClicked;
+						lastSearchFromUser.section = section;
+					}
+					lastSearchFromUser.update();
+				}
+			}
+		}
+		
+		if (spawnNewLog == true){
+			//Insert log entry
+			var newLog = new GlideRecord("sn_onesearch_log");
+			newLog.initialize();
+			if (actionType == 'conversion'){
+				newLog.converted = true;
+				newLog.url = urlClicked;
+				newLog.section = section;
+			}
+			newLog.searcher = searcherID;
+			newLog.search_term = searchTerm;
+			newLog.user = userID;
+			newLog.insert();
+		}
+		
+		if (initVals.debug == 'true')
+			gs.info('OneSearch: ' + logAction + ' log entry for ' + actionType + ' for searcher ' + searcherID + '(searchTerm = ' + searchTerm + ', url = ' + urlClicked + ')');
+	}
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+        <sys_created_on>2014-11-28 17:54:55</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>4d9aa8230f603100c8badf2be1050e36</sys_id>
+        <sys_mod_count>330</sys_mod_count>
+        <sys_name>oneSearchAjax</sys_name>
+        <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+        <sys_update_name>sys_script_include_4d9aa8230f603100c8badf2be1050e36</sys_update_name>
+        <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+        <sys_updated_on>2015-10-18 16:28:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

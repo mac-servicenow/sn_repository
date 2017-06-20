@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="label" label="Label" language="en" table="sn_onesearch_sections">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>label</element>
+            <help/>
+            <hint>Label that will be displayed on the search section header</hint>
+            <label>Label</label>
+            <language>en</language>
+            <name>sn_onesearch_sections</name>
+            <plural>Labels</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>ben.hollifield@snc_SHARE</sys_created_by>
+            <sys_created_on>2014-11-28 18:12:02</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_id>b1ae60630f603100c8badf2be1050e60</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Label</sys_name>
+            <sys_package display_value="OneSearch" source="sn_onesearch">d461206f0f203100c8badf2be1050eb6</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="OneSearch">d461206f0f203100c8badf2be1050eb6</sys_scope>
+            <sys_update_name>sys_documentation_sn_onesearch_sections_label_en</sys_update_name>
+            <sys_updated_by>ben.hollifield@snc_SHARE</sys_updated_by>
+            <sys_updated_on>2014-12-08 02:21:33</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
